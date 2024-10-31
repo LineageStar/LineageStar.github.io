@@ -1371,7 +1371,7 @@ body {
   background: var(--global-bg);
   color: var(--font-color);
   font-size: var(--global-font-size);
-  font-family: MesloLGS Nerd Font Mono, PingFang SC;
+  font-family: MesloLGS Nerd Font Mono;
   line-height: 2;
   -webkit-tap-highlight-color: rgba(0,0,0,0);
   scroll-behavior: smooth;
@@ -1494,13 +1494,6 @@ a {
 }
 a:hover {
   color: #49b1f5;
-}
-#site-title,
-#site-subtitle,
-.site-name,
-#aside-content .author-info-name,
-#aside-content .author-info-description {
-  font-family: PingFang SC;
 }
 .text-center {
   text-align: center;
