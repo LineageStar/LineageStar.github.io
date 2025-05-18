@@ -1,0 +1,324 @@
+<!DOCTYPE html><html lang="en" data-theme="light"><head><meta charset="UTF-8"><meta http-equiv="X-UA-Compatible" content="IE=edge"><meta name="viewport" content="width=device-width, initial-scale=1.0,viewport-fit=cover"><title>Codeforces Round 993 (Div. 4)题解 (A~H) | Eysiking</title><meta name="author" content="Eysiking,eysikinge@gmail.com"><meta name="copyright" content="Eysiking"><meta name="format-detection" content="telephone=no"><meta name="theme-color" content="#ffffff"><meta name="description" content="题目链接 A题答案为$n-1$。 B题p变为q，q变为p，再反转即可。 C题贪心安排a，b只猴子能坐的数量，剩余位置分配给c。 123456void solve() &#123;    int a, b, c, m;    cin &gt;&gt; m &gt;&gt; a &gt;&gt; b &gt;&gt; c;    cout &lt;&lt; std::min(a, m) + std::">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Codeforces Round 993 (Div. 4)题解 (A~H)">
+<meta property="og:url" content="http://lineagestar.github.io/2024/12/18/CodeForces/Codeforces%20Round%20993%20(Div.%204)/index.html">
+<meta property="og:site_name" content="Eysiking">
+<meta property="og:description" content="题目链接 A题答案为$n-1$。 B题p变为q，q变为p，再反转即可。 C题贪心安排a，b只猴子能坐的数量，剩余位置分配给c。 123456void solve() &#123;    int a, b, c, m;    cin &gt;&gt; m &gt;&gt; a &gt;&gt; b &gt;&gt; c;    cout &lt;&lt; std::min(a, m) + std::">
+<meta property="og:locale" content="en_US">
+<meta property="og:image" content="http://lineagestar.github.io/img/23.jpg">
+<meta property="article:published_time" content="2024-12-18T09:00:19.000Z">
+<meta property="article:modified_time" content="2024-12-20T02:04:56.286Z">
+<meta property="article:author" content="Eysiking">
+<meta property="article:tag" content="CodeForces">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="http://lineagestar.github.io/img/23.jpg"><link rel="shortcut icon" href="/img/aili.png"><link rel="canonical" href="http://lineagestar.github.io/2024/12/18/CodeForces/Codeforces%20Round%20993%20(Div.%204)/index.html"><link rel="preconnect" href="//cdn.jsdelivr.net"/><link rel="preconnect" href="//busuanzi.ibruce.info"/><link rel="manifest" href="/null"/><link rel="stylesheet" href="/css/index.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free/css/all.min.css"><script>
+    (() => {
+      
+    const saveToLocal = {
+      set: (key, value, ttl) => {
+        if (!ttl) return
+        const expiry = Date.now() + ttl * 86400000
+        localStorage.setItem(key, JSON.stringify({ value, expiry }))
+      },
+      get: key => {
+        const itemStr = localStorage.getItem(key)
+        if (!itemStr) return undefined
+        const { value, expiry } = JSON.parse(itemStr)
+        if (Date.now() > expiry) {
+          localStorage.removeItem(key)
+          return undefined
+        }
+        return value
+      }
+    }
+
+    window.btf = {
+      saveToLocal,
+      getScript: (url, attr = {}) => new Promise((resolve, reject) => {
+        const script = document.createElement('script')
+        script.src = url
+        script.async = true
+        Object.entries(attr).forEach(([key, val]) => script.setAttribute(key, val))
+        script.onload = script.onreadystatechange = () => {
+          if (!script.readyState || /loaded|complete/.test(script.readyState)) resolve()
+        }
+        script.onerror = reject
+        document.head.appendChild(script)
+      }),
+      getCSS: (url, id) => new Promise((resolve, reject) => {
+        const link = document.createElement('link')
+        link.rel = 'stylesheet'
+        link.href = url
+        if (id) link.id = id
+        link.onload = link.onreadystatechange = () => {
+          if (!link.readyState || /loaded|complete/.test(link.readyState)) resolve()
+        }
+        link.onerror = reject
+        document.head.appendChild(link)
+      }),
+      addGlobalFn: (key, fn, name = false, parent = window) => {
+        if (!false && key.startsWith('pjax')) return
+        const globalFn = parent.globalFn || {}
+        globalFn[key] = globalFn[key] || {}
+        if (name && globalFn[key][name]) return
+        globalFn[key][name || Object.keys(globalFn[key]).length] = fn
+        parent.globalFn = globalFn
+      }
+    }
+  
+      
+      const activateDarkMode = () => {
+        document.documentElement.setAttribute('data-theme', 'dark')
+        if (document.querySelector('meta[name="theme-color"]') !== null) {
+          document.querySelector('meta[name="theme-color"]').setAttribute('content', '#0d0d0d')
+        }
+      }
+      const activateLightMode = () => {
+        document.documentElement.setAttribute('data-theme', 'light')
+        if (document.querySelector('meta[name="theme-color"]') !== null) {
+          document.querySelector('meta[name="theme-color"]').setAttribute('content', '#ffffff')
+        }
+      }
+
+      btf.activateDarkMode = activateDarkMode
+      btf.activateLightMode = activateLightMode
+
+      const theme = saveToLocal.get('theme')
+    
+          const mediaQueryDark = window.matchMedia('(prefers-color-scheme: dark)')
+          const mediaQueryLight = window.matchMedia('(prefers-color-scheme: light)')
+          
+          if (theme === undefined) {
+            if (mediaQueryLight.matches) activateLightMode()
+            else if (mediaQueryDark.matches) activateDarkMode()
+            else {
+              const hour = new Date().getHours()
+              const isNight = hour <= 6 || hour >= 18
+              isNight ? activateDarkMode() : activateLightMode()
+            }
+            mediaQueryDark.addEventListener('change', () => {
+              if (saveToLocal.get('theme') === undefined) {
+                e.matches ? activateDarkMode() : activateLightMode()
+              }
+            })
+          } else {
+            theme === 'light' ? activateLightMode() : activateDarkMode()
+          }
+        
+      
+      const asideStatus = saveToLocal.get('aside-status')
+      if (asideStatus !== undefined) {
+        document.documentElement.classList.toggle('hide-aside', asideStatus === 'hide')
+      }
+    
+      
+    const detectApple = () => {
+      if (/iPad|iPhone|iPod|Macintosh/.test(navigator.userAgent)) {
+        document.documentElement.classList.add('apple')
+      }
+    }
+    detectApple()
+  
+    })()
+  </script><script>const GLOBAL_CONFIG = {
+  root: '/',
+  algolia: undefined,
+  localSearch: undefined,
+  translate: undefined,
+  noticeOutdate: {"limitDay":365,"position":"bottom","messagePrev":"It has been","messageNext":"days since the last update, the content of the article may be outdated."},
+  highlight: {"plugin":"highlight.js","highlightCopy":true,"highlightLang":true,"highlightHeightLimit":500,"highlightFullpage":true,"highlightMacStyle":true},
+  copy: {
+    success: 'Copy Successful',
+    error: 'Copy Failed',
+    noSupport: 'Browser Not Supported'
+  },
+  relativeDate: {
+    homepage: false,
+    post: false
+  },
+  runtime: '',
+  dateSuffix: {
+    just: 'Just now',
+    min: 'minutes ago',
+    hour: 'hours ago',
+    day: 'days ago',
+    month: 'months ago'
+  },
+  copyright: undefined,
+  lightbox: 'null',
+  Snackbar: undefined,
+  infinitegrid: {
+    js: 'https://cdn.jsdelivr.net/npm/@egjs/infinitegrid/dist/infinitegrid.min.js',
+    buttonText: 'Load More'
+  },
+  isPhotoFigcaption: false,
+  islazyload: false,
+  isAnchor: false,
+  percent: {
+    toc: true,
+    rightside: true,
+  },
+  autoDarkmode: true
+}</script><script id="config-diff">var GLOBAL_CONFIG_SITE = {
+  title: 'Codeforces Round 993 (Div. 4)题解 (A~H)',
+  isPost: true,
+  isHome: false,
+  isHighlightShrink: false,
+  isToc: true,
+  postUpdate: '2024-12-20 10:04:56'
+}</script><meta name="generator" content="Hexo 7.3.0"></head><body><div id="loading-box"><div class="loading-left-bg"></div><div class="loading-right-bg"></div><div class="spinner-box"><div class="configure-border-1"><div class="configure-core"></div></div><div class="configure-border-2"><div class="configure-core"></div></div><div class="loading-word">Loading...</div></div></div><script>(()=>{
+  const $loadingBox = document.getElementById('loading-box')
+  const $body = document.body
+  const preloader = {
+    endLoading: () => {
+      $body.style.overflow = ''
+      $loadingBox.classList.add('loaded')
+    },
+    initLoading: () => {
+      $body.style.overflow = 'hidden'
+      $loadingBox.classList.remove('loaded')
+    }
+  }
+
+  preloader.initLoading()
+  window.addEventListener('load', preloader.endLoading)
+
+  if (false) {
+    btf.addGlobalFn('pjaxSend', preloader.initLoading, 'preloader_init')
+    btf.addGlobalFn('pjaxComplete', preloader.endLoading, 'preloader_end')
+  }
+})()</script><div id="web_bg" style="background: linear-gradient(20deg, #fbc2eb 0%, #a6c1ee 100%);"></div><div id="sidebar"><div id="menu-mask"></div><div id="sidebar-menus"><div class="avatar-img text-center"><img src="/img/aili.png" onerror="onerror=null;src='/img/friend_404.gif'" alt="avatar"/></div><div class="site-data text-center"><a href="/archives/"><div class="headline">Articles</div><div class="length-num">27</div></a><a href="/tags/"><div class="headline">Tags</div><div class="length-num">5</div></a><a href="/categories/"><div class="headline">Categories</div><div class="length-num">3</div></a></div><div class="menus_items"><div class="menus_item"><a class="site-page" href="/"><i class="fa-fw fas fa-home"></i><span> Home</span></a></div><div class="menus_item"><span class="site-page group hide"><i class="fa-fw fas fa-list"></i><span> List</span><i class="fas fa-chevron-down"></i></span><ul class="menus_item_child"><li><a class="site-page child" href="/music/"><i class="fa-fw fas fa-music"></i><span> Music</span></a></li><li><a class="site-page child" href="/movies/"><i class="fa-fw fas fa-video"></i><span> Movie</span></a></li></ul></div><div class="menus_item"><a class="site-page" href="/archives/"><i class="fa-fw fas fa-archive"></i><span> Archives</span></a></div><div class="menus_item"><span class="site-page group hide"><i class="fa-fw fas fa-tags"></i><span> Tags</span><i class="fas fa-chevron-down"></i></span><ul class="menus_item_child"><li><a class="site-page child" href="https://lineagestar.github.io/tags/CPP-Thread/"><i class="fa-fw fas fa-solid fa-paperclip"></i><span> CPP-Thread</span></a></li><li><a class="site-page child" href="https://lineagestar.github.io/tags/CPP-Template/"><i class="fa-fw fas fa-solid fa-paperclip"></i><span> CPP-Template</span></a></li><li><a class="site-page child" href="https://lineagestar.github.io/tags/Assembly/"><i class="fa-fw fas fa-solid fa-paperclip"></i><span> Assembly</span></a></li><li><a class="site-page child" href="https://lineagestar.github.io/tags/CPP-STL/"><i class="fa-fw fas fa-solid fa-paperclip"></i><span> CPP-STL</span></a></li><li><a class="site-page child" href="https://lineagestar.github.io/tags/CodeForces/"><i class="fa-fw fas fa-solid fa-paperclip"></i><span> CodeForces</span></a></li><li><a class="site-page child" href="https://lineagestar.github.io/tags/AtCoder/"><i class="fa-fw fas fa-solid fa-paperclip"></i><span> AtCoder</span></a></li></ul></div><div class="menus_item"><span class="site-page group hide"><i class="fa-fw fas fa-folder-open"></i><span> Categories</span><i class="fas fa-chevron-down"></i></span><ul class="menus_item_child"><li><a class="site-page child" href="https://lineagestar.github.io/categories/CPP/"><i class="fa-fw fas fa-regular fa-file"></i><span> CPP</span></a></li><li><a class="site-page child" href="https://lineagestar.github.io/categories/Assembly/"><i class="fa-fw fas fa-regular fa-file"></i><span> Assembly</span></a></li><li><a class="site-page child" href="https://lineagestar.github.io/categories/Algorithm/"><i class="fa-fw fas fa-regular fa-file"></i><span> Algorithm</span></a></li></ul></div><div class="menus_item"><span class="site-page group hide"><i class="fa-fw fas fa-link"></i><span> Link</span><i class="fas fa-chevron-down"></i></span><ul class="menus_item_child"><li><a class="site-page child" target="_blank" rel="noopener" href="https://en.cppreference.com/w/Main_Page"><i class="fa-fw fa-solid fa-code"></i><span> cppreference</span></a></li><li><a class="site-page child" target="_blank" rel="noopener" href="https://www.youtube.com/"><i class="fa-fw fa-brands fa-youtube"></i><span> Youtube</span></a></li><li><a class="site-page child" target="_blank" rel="noopener" href="https://github.com/"><i class="fa-fw fa-brands fa-square-github"></i><span> GitHub</span></a></li><li><a class="site-page child" target="_blank" rel="noopener" href="https://hoyue.fun/animes.html"><i class="fa-fw fa-brands fa-react"></i><span> Cartoon</span></a></li></ul></div><div class="menus_item"><a class="site-page" href="/about/"><i class="fa-fw fas fa-heart"></i><span> About</span></a></div></div></div></div><div class="post" id="body-wrap"><header class="post-bg" id="page-header" style="background-image: url(/img/23.jpg);"><nav id="nav"><span id="blog-info"><a class="nav-site-title" href="/"><img class="site-icon" src="/img/aili.png" alt="Logo"><span class="site-name">Eysiking</span></a><a class="nav-page-title" href="/"><span class="site-name">Codeforces Round 993 (Div. 4)题解 (A~H)</span></a></span><div id="menus"><div class="menus_items"><div class="menus_item"><a class="site-page" href="/"><i class="fa-fw fas fa-home"></i><span> Home</span></a></div><div class="menus_item"><span class="site-page group hide"><i class="fa-fw fas fa-list"></i><span> List</span><i class="fas fa-chevron-down"></i></span><ul class="menus_item_child"><li><a class="site-page child" href="/music/"><i class="fa-fw fas fa-music"></i><span> Music</span></a></li><li><a class="site-page child" href="/movies/"><i class="fa-fw fas fa-video"></i><span> Movie</span></a></li></ul></div><div class="menus_item"><a class="site-page" href="/archives/"><i class="fa-fw fas fa-archive"></i><span> Archives</span></a></div><div class="menus_item"><span class="site-page group hide"><i class="fa-fw fas fa-tags"></i><span> Tags</span><i class="fas fa-chevron-down"></i></span><ul class="menus_item_child"><li><a class="site-page child" href="https://lineagestar.github.io/tags/CPP-Thread/"><i class="fa-fw fas fa-solid fa-paperclip"></i><span> CPP-Thread</span></a></li><li><a class="site-page child" href="https://lineagestar.github.io/tags/CPP-Template/"><i class="fa-fw fas fa-solid fa-paperclip"></i><span> CPP-Template</span></a></li><li><a class="site-page child" href="https://lineagestar.github.io/tags/Assembly/"><i class="fa-fw fas fa-solid fa-paperclip"></i><span> Assembly</span></a></li><li><a class="site-page child" href="https://lineagestar.github.io/tags/CPP-STL/"><i class="fa-fw fas fa-solid fa-paperclip"></i><span> CPP-STL</span></a></li><li><a class="site-page child" href="https://lineagestar.github.io/tags/CodeForces/"><i class="fa-fw fas fa-solid fa-paperclip"></i><span> CodeForces</span></a></li><li><a class="site-page child" href="https://lineagestar.github.io/tags/AtCoder/"><i class="fa-fw fas fa-solid fa-paperclip"></i><span> AtCoder</span></a></li></ul></div><div class="menus_item"><span class="site-page group hide"><i class="fa-fw fas fa-folder-open"></i><span> Categories</span><i class="fas fa-chevron-down"></i></span><ul class="menus_item_child"><li><a class="site-page child" href="https://lineagestar.github.io/categories/CPP/"><i class="fa-fw fas fa-regular fa-file"></i><span> CPP</span></a></li><li><a class="site-page child" href="https://lineagestar.github.io/categories/Assembly/"><i class="fa-fw fas fa-regular fa-file"></i><span> Assembly</span></a></li><li><a class="site-page child" href="https://lineagestar.github.io/categories/Algorithm/"><i class="fa-fw fas fa-regular fa-file"></i><span> Algorithm</span></a></li></ul></div><div class="menus_item"><span class="site-page group hide"><i class="fa-fw fas fa-link"></i><span> Link</span><i class="fas fa-chevron-down"></i></span><ul class="menus_item_child"><li><a class="site-page child" target="_blank" rel="noopener" href="https://en.cppreference.com/w/Main_Page"><i class="fa-fw fa-solid fa-code"></i><span> cppreference</span></a></li><li><a class="site-page child" target="_blank" rel="noopener" href="https://www.youtube.com/"><i class="fa-fw fa-brands fa-youtube"></i><span> Youtube</span></a></li><li><a class="site-page child" target="_blank" rel="noopener" href="https://github.com/"><i class="fa-fw fa-brands fa-square-github"></i><span> GitHub</span></a></li><li><a class="site-page child" target="_blank" rel="noopener" href="https://hoyue.fun/animes.html"><i class="fa-fw fa-brands fa-react"></i><span> Cartoon</span></a></li></ul></div><div class="menus_item"><a class="site-page" href="/about/"><i class="fa-fw fas fa-heart"></i><span> About</span></a></div></div><div id="toggle-menu"><span class="site-page"><i class="fas fa-bars fa-fw"></i></span></div></div></nav><div id="post-info"><h1 class="post-title">Codeforces Round 993 (Div. 4)题解 (A~H)</h1><div id="post-meta"><div class="meta-firstline"><span class="post-meta-date"><i class="far fa-calendar-alt fa-fw post-meta-icon"></i><span class="post-meta-label">Created</span><time class="post-meta-date-created" datetime="2024-12-18T09:00:19.000Z" title="Created 2024-12-18 17:00:19">2024-12-18</time><span class="post-meta-separator">|</span><i class="fas fa-history fa-fw post-meta-icon"></i><span class="post-meta-label">Updated</span><time class="post-meta-date-updated" datetime="2024-12-20T02:04:56.286Z" title="Updated 2024-12-20 10:04:56">2024-12-20</time></span><span class="post-meta-categories"><span class="post-meta-separator">|</span><i class="fas fa-inbox fa-fw post-meta-icon"></i><a class="post-meta-categories" href="/categories/Algorithm/">Algorithm</a></span></div><div class="meta-secondline"><span class="post-meta-separator">|</span><span class="post-meta-wordcount"><i class="far fa-file-word fa-fw post-meta-icon"></i><span class="post-meta-label">Word Count:</span><span class="word-count">1.4k</span><span class="post-meta-separator">|</span><i class="far fa-clock fa-fw post-meta-icon"></i><span class="post-meta-label">Reading Time:</span><span>7mins</span></span><span class="post-meta-separator">|</span><span class="post-meta-pv-cv" id="" data-flag-title=""><i class="far fa-eye fa-fw post-meta-icon"></i><span class="post-meta-label">Post Views:</span><span id="busuanzi_value_page_pv"><i class="fa-solid fa-spinner fa-spin"></i></span></span></div></div></div></header><main class="layout" id="content-inner"><div id="post"><article class="post-content" id="article-container"><p><a target="_blank" rel="noopener" href="https://codeforces.com/contest/2044"><em>题目链接</em></a></p>
+<h1 id="A题"><a href="#A题" class="headerlink" title="A题"></a>A题</h1><p>答案为$n-1$。</p>
+<h1 id="B题"><a href="#B题" class="headerlink" title="B题"></a>B题</h1><p>p变为q，q变为p，再反转即可。</p>
+<h1 id="C题"><a href="#C题" class="headerlink" title="C题"></a>C题</h1><p>贪心安排a，b只猴子能坐的数量，剩余位置分配给c。</p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="type">void</span> <span class="title">solve</span><span class="params">()</span> </span>&#123;</span><br><span class="line">    <span class="type">int</span> a, b, c, m;</span><br><span class="line">    cin &gt;&gt; m &gt;&gt; a &gt;&gt; b &gt;&gt; c;</span><br><span class="line">    cout &lt;&lt; std::<span class="built_in">min</span>(a, m) + std::<span class="built_in">min</span>(b, m) + </span><br><span class="line">    std::<span class="built_in">min</span>(<span class="number">2</span> * m - std::<span class="built_in">min</span>(a, m) - std::<span class="built_in">min</span>(b, m), c) &lt;&lt; <span class="string">&#x27;\n&#x27;</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h1 id="D题"><a href="#D题" class="headerlink" title="D题"></a>D题</h1><p>由于数列$a$中所有数字均在$n$之内，且需要填的数列$b$也必须在$n$之内，那就让$b$中每个数字出现的模只出现一次，空缺用$a$中未出现的数字替代，可知一定不会有冲突的情况，一定可以按要求填满。</p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="type">void</span> <span class="title">solve</span><span class="params">()</span> </span>&#123;</span><br><span class="line">    <span class="type">int</span> a, b, c, m;</span><br><span class="line">    cin &gt;&gt; m &gt;&gt; a &gt;&gt; b &gt;&gt; c;</span><br><span class="line">    cout &lt;&lt; std::<span class="built_in">min</span>(a, m) + std::<span class="built_in">min</span>(b, m) + </span><br><span class="line">    std::<span class="built_in">min</span>(<span class="number">2</span> * m - std::<span class="built_in">min</span>(a, m) - std::<span class="built_in">min</span>(b, m), c) &lt;&lt; <span class="string">&#x27;\n&#x27;</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h1 id="E题"><a href="#E题" class="headerlink" title="E题"></a>E题</h1><p>转化为$y&#x3D;x\cdot k^n$，考虑枚举$k^n$，然后对边界情况取交集即可。</p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="type">void</span> <span class="title">solve</span><span class="params">()</span> </span>&#123;</span><br><span class="line">    u64 k, l1, r1, l2, r2, ans = <span class="number">0</span>;</span><br><span class="line">    cin &gt;&gt; k &gt;&gt; l1 &gt;&gt; r1 &gt;&gt; l2 &gt;&gt; r2;</span><br><span class="line">    u64 tk = <span class="number">1</span>;</span><br><span class="line">    <span class="keyword">while</span> (l1 * tk &lt;= r2) &#123;</span><br><span class="line">        <span class="type">int</span> l = std::<span class="built_in">max</span>(l1, (l2 + tk - <span class="number">1</span>) / tk);</span><br><span class="line">        <span class="type">int</span> r = std::<span class="built_in">min</span>(r1, r2 / tk);</span><br><span class="line">        <span class="keyword">if</span> (r &gt;= l) &#123;</span><br><span class="line">            ans += r - l + <span class="number">1</span>;</span><br><span class="line">        &#125;</span><br><span class="line">        tk *= k;</span><br><span class="line">    &#125;</span><br><span class="line">    cout &lt;&lt; ans &lt;&lt; <span class="string">&#x27;\n&#x27;</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h1 id="F题"><a href="#F题" class="headerlink" title="F题"></a>F题</h1><p>方格所有数之和为$\sum_{i&#x3D;1}^n\sum_{j&#x3D;1}^ma_ib_j&#x3D;\sum_{i&#x3D;1}^na_i\cdot \sum_{j&#x3D;1}^mb_j$，从中去除一行或者一列就是从$a$数列中去除一个数，$b$数列中去除一个数，再分别求和相乘。</p>
+<p>由于两个数组中的元素绝对值均在$n$，$m$之内，直接使用数组模拟哈希表，每次询问的$x$在$2e5$以内，直接枚举$x$的因子，然后分别在两个数组中寻找即可。复杂度$O(n+m+q\sqrt{q})$。</p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="type">void</span> <span class="title">solve</span><span class="params">()</span> </span>&#123;</span><br><span class="line">    <span class="type">int</span> n, m, q;</span><br><span class="line">    cin &gt;&gt; n &gt;&gt; m &gt;&gt; q;</span><br><span class="line">    <span class="function">std::vector&lt;<span class="type">bool</span>&gt; <span class="title">hasha</span><span class="params">(<span class="number">2</span> * n + <span class="number">1</span>)</span>, <span class="title">hashb</span><span class="params">(<span class="number">2</span> * m + <span class="number">1</span>)</span></span>;</span><br><span class="line">    i64 suma = <span class="number">0</span>, sumb = <span class="number">0</span>;</span><br><span class="line">    <span class="keyword">for</span> (<span class="type">int</span> i = <span class="number">0</span>; i &lt; n; i++) &#123;</span><br><span class="line">        <span class="type">int</span> a;</span><br><span class="line">        cin &gt;&gt; a;</span><br><span class="line">        suma += a;</span><br><span class="line">        hasha[a + n] = <span class="literal">true</span>;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">for</span> (<span class="type">int</span> j = <span class="number">0</span>; j &lt; m; j++) &#123;</span><br><span class="line">        <span class="type">int</span> b;</span><br><span class="line">        cin &gt;&gt; b;</span><br><span class="line">        sumb += b;</span><br><span class="line">        hashb[b + m] = <span class="literal">true</span>;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">auto</span> check = [&amp;](i64 x, i64 y) -&gt; <span class="type">bool</span> &#123;</span><br><span class="line">        <span class="keyword">if</span> (x &gt; n || x &lt; -n || y &gt; m || y &lt; -m) <span class="keyword">return</span> <span class="literal">false</span>;</span><br><span class="line">        <span class="keyword">return</span> hasha[x + n] &amp;&amp; hashb[y + m];</span><br><span class="line">    &#125;;</span><br><span class="line">    <span class="keyword">while</span> (q--) &#123;</span><br><span class="line">        <span class="type">int</span> que;</span><br><span class="line">        cin &gt;&gt; que;</span><br><span class="line">        <span class="type">bool</span> flag = <span class="literal">false</span>;</span><br><span class="line">        <span class="keyword">for</span> (<span class="type">int</span> i = <span class="number">1</span>; <span class="number">1ll</span> * i * i &lt;= std::<span class="built_in">abs</span>(que); i++) &#123;</span><br><span class="line">            <span class="keyword">if</span> (que % i == <span class="number">0</span>) &#123;</span><br><span class="line">                <span class="keyword">if</span> (<span class="built_in">check</span>(suma - i, sumb - que / i) || <span class="built_in">check</span>(suma + i, sumb + que / i) || <span class="built_in">check</span>(suma - que / i, sumb - i) || <span class="built_in">check</span>(suma + que / i, sumb + i)) &#123;</span><br><span class="line">                    flag = <span class="literal">true</span>;</span><br><span class="line">                    cout &lt;&lt; <span class="string">&quot;YES\n&quot;</span>;</span><br><span class="line">                    <span class="keyword">break</span>;</span><br><span class="line">                &#125;</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">if</span> (!flag) &#123;</span><br><span class="line">            cout &lt;&lt; <span class="string">&quot;NO\n&quot;</span>;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h1 id="G1题"><a href="#G1题" class="headerlink" title="G1题"></a>G1题</h1><p>由于每只蜘蛛手里最多只能有一个玩具，因此一遍拓扑序即可。</p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="type">void</span> <span class="title">solve</span><span class="params">()</span> </span>&#123;</span><br><span class="line">    <span class="type">int</span> n;</span><br><span class="line">    cin &gt;&gt; n;</span><br><span class="line">    <span class="function">std::vector&lt;<span class="type">int</span>&gt; <span class="title">a</span><span class="params">(n + <span class="number">1</span>)</span>, <span class="title">in</span><span class="params">(n + <span class="number">1</span>)</span></span>;</span><br><span class="line">    <span class="keyword">for</span> (<span class="type">int</span> i = <span class="number">1</span>; i &lt;= n; i++) &#123;</span><br><span class="line">        cin &gt;&gt; a[i];</span><br><span class="line">        in[a[i]]++;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="type">int</span> ans = <span class="number">2</span>;</span><br><span class="line">    std::queue&lt;<span class="type">int</span>&gt; q;</span><br><span class="line">    <span class="keyword">for</span> (<span class="type">int</span> i = <span class="number">1</span>; i &lt;= n; i++) &#123;</span><br><span class="line">        <span class="keyword">if</span> (in[i] == <span class="number">0</span>) &#123;</span><br><span class="line">            q.<span class="built_in">push</span>(i);</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">while</span> (!q.<span class="built_in">empty</span>()) &#123;</span><br><span class="line">        ans++;</span><br><span class="line">        <span class="type">int</span> size = q.<span class="built_in">size</span>();</span><br><span class="line">        <span class="keyword">while</span> (size--) &#123;</span><br><span class="line">            <span class="type">int</span> u = q.<span class="built_in">front</span>();</span><br><span class="line">            q.<span class="built_in">pop</span>();</span><br><span class="line">            <span class="keyword">if</span> (--in[a[u]] == <span class="number">0</span>) &#123;</span><br><span class="line">                q.<span class="built_in">push</span>(a[u]);</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">    cout &lt;&lt; ans &lt;&lt; <span class="string">&#x27;\n&#x27;</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h1 id="G2题"><a href="#G2题" class="headerlink" title="G2题"></a>G2题</h1><p>这次每只蜘蛛手里可以有多个玩具，由于每个点出度均为1，因此用一个变量$t$来表示还没变为0的点，到目前为止应该已经递出去了$t$件礼物，用$dp[i]$表示当前节点$i$总共收到了多少件玩具，当目前$dp[i]&#x3D;t$时，弹出该节点，这时将整个$dp[i]$递给下一个节点，令下一个节点的入度减一，入度为0时，入队。</p>
+<p>由于每次需要弹出当前层的所有节点，但有的节点弹出时$dp[i]&gt;t$，那么这个节点需要重新入队。</p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="type">void</span> <span class="title">solve</span><span class="params">()</span> </span>&#123;</span><br><span class="line">    <span class="type">int</span> n;</span><br><span class="line">    cin &gt;&gt; n;</span><br><span class="line">    <span class="function">std::vector&lt;<span class="type">int</span>&gt; <span class="title">dp</span><span class="params">(n + <span class="number">1</span>, <span class="number">1</span>)</span>, <span class="title">in</span><span class="params">(n + <span class="number">1</span>)</span>, <span class="title">r</span><span class="params">(n + <span class="number">1</span>)</span></span>;</span><br><span class="line">    <span class="keyword">for</span> (<span class="type">int</span> i = <span class="number">1</span>; i &lt;= n; i++) &#123;</span><br><span class="line">        cin &gt;&gt; r[i];</span><br><span class="line">        in[r[i]]++;</span><br><span class="line">    &#125;</span><br><span class="line">    std::queue&lt;<span class="type">int</span>&gt; q;</span><br><span class="line">    <span class="keyword">for</span> (<span class="type">int</span> i = <span class="number">1</span>; i &lt;= n; i++) &#123;</span><br><span class="line">        <span class="keyword">if</span> (!in[i]) &#123;</span><br><span class="line">            q.<span class="built_in">push</span>(i);</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="type">int</span> ans = <span class="number">2</span>, t = <span class="number">1</span>;</span><br><span class="line">    <span class="keyword">while</span> (!q.<span class="built_in">empty</span>()) &#123;</span><br><span class="line">        ans++;</span><br><span class="line">        <span class="type">int</span> size = q.<span class="built_in">size</span>();</span><br><span class="line">        <span class="keyword">while</span> (size--) &#123;</span><br><span class="line">            <span class="type">int</span> u = q.<span class="built_in">front</span>();</span><br><span class="line">            q.<span class="built_in">pop</span>();</span><br><span class="line">            <span class="keyword">if</span> (dp[u] &gt; t) &#123;</span><br><span class="line">                q.<span class="built_in">push</span>(u);</span><br><span class="line">            &#125;</span><br><span class="line">            <span class="type">int</span> v = r[u];</span><br><span class="line">            <span class="keyword">if</span> (dp[u] == t) &#123;</span><br><span class="line">                dp[v] += dp[u];</span><br><span class="line">                <span class="keyword">if</span> (--in[v] == <span class="number">0</span>) &#123;</span><br><span class="line">                    q.<span class="built_in">push</span>(v);</span><br><span class="line">                &#125;</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">        t++;</span><br><span class="line">    &#125;</span><br><span class="line">    cout &lt;&lt; ans &lt;&lt; <span class="string">&#x27;\n&#x27;</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h1 id="H题"><a href="#H题" class="headerlink" title="H题"></a>H题</h1><figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="type">void</span> <span class="title">solve</span><span class="params">()</span> </span>&#123;</span><br><span class="line">    <span class="type">int</span> n, q;</span><br><span class="line">    n = <span class="built_in">read</span>&lt;<span class="type">int</span>&gt;();</span><br><span class="line">    q = <span class="built_in">read</span>&lt;<span class="type">int</span>&gt;();</span><br><span class="line">    std::vector&lt;std::vector&lt;i64&gt;&gt; <span class="built_in">sum</span>(n + <span class="number">1</span>, std::<span class="built_in">vector</span>&lt;i64&gt;(n + <span class="number">1</span>));</span><br><span class="line">    std::vector&lt;std::vector&lt;i64&gt;&gt; <span class="built_in">sumr</span>(n + <span class="number">1</span>, std::<span class="built_in">vector</span>&lt;i64&gt;(n + <span class="number">1</span>));</span><br><span class="line">    std::vector&lt;std::vector&lt;i64&gt;&gt; <span class="built_in">sumc</span>(n + <span class="number">1</span>, std::<span class="built_in">vector</span>&lt;i64&gt;(n + <span class="number">1</span>));</span><br><span class="line"></span><br><span class="line">    <span class="keyword">for</span> (<span class="type">int</span> i = <span class="number">1</span>; i &lt;= n; i++) &#123;</span><br><span class="line">        <span class="keyword">for</span> (<span class="type">int</span> j = <span class="number">1</span>; j &lt;= n; j++) &#123;</span><br><span class="line">            <span class="type">int</span> a;</span><br><span class="line">            a = <span class="built_in">read</span>&lt;<span class="type">int</span>&gt;();</span><br><span class="line">            sum[i][j] = sum[i - <span class="number">1</span>][j] + sum[i][j - <span class="number">1</span>] - sum[i - <span class="number">1</span>][j - <span class="number">1</span>] + a;</span><br><span class="line">            sumr[i][j] = sumr[i - <span class="number">1</span>][j] + sumr[i][j - <span class="number">1</span>] - sumr[i - <span class="number">1</span>][j - <span class="number">1</span>] + a * j;</span><br><span class="line">            sumc[i][j] = sumc[i - <span class="number">1</span>][j] + sumc[i][j - <span class="number">1</span>] - sumc[i - <span class="number">1</span>][j - <span class="number">1</span>] + a * i;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">auto</span> get_sum = [&amp;](std::vector&lt;std::vector&lt;i64&gt;&gt; &amp;a, <span class="type">int</span> x1, <span class="type">int</span> y1, <span class="type">int</span> x2, <span class="type">int</span> y2) -&gt; i64 &#123;</span><br><span class="line">        <span class="keyword">return</span> a[x2][y2] - a[x2][y1 - <span class="number">1</span>] - a[x1 - <span class="number">1</span>][y2] + a[x1 - <span class="number">1</span>][y1 - <span class="number">1</span>];</span><br><span class="line">    &#125;;</span><br><span class="line">    <span class="keyword">for</span> (<span class="type">int</span> i = <span class="number">0</span>; i &lt; q; i++) &#123;</span><br><span class="line">        <span class="type">int</span> x1, y1, x2, y2;</span><br><span class="line">        x1 = <span class="built_in">read</span>&lt;<span class="type">int</span>&gt;();</span><br><span class="line">        y1 = <span class="built_in">read</span>&lt;<span class="type">int</span>&gt;();</span><br><span class="line">        x2 = <span class="built_in">read</span>&lt;<span class="type">int</span>&gt;();</span><br><span class="line">        y2 = <span class="built_in">read</span>&lt;<span class="type">int</span>&gt;();</span><br><span class="line">        </span><br><span class="line">        i64 sr = <span class="built_in">get_sum</span>(sumr, x1, y1, x2, y2);</span><br><span class="line">        i64 sc = <span class="built_in">get_sum</span>(sumc, x1, y1, x2, y2);</span><br><span class="line">        i64 s = <span class="built_in">get_sum</span>(sum, x1, y1, x2, y2);</span><br><span class="line">        </span><br><span class="line">        cout &lt;&lt; sr + sc * (y2 - y1 + <span class="number">1</span>) - s * (x1 * (y2 - y1 + <span class="number">1</span>) + y1 - <span class="number">1</span>) &lt;&lt; <span class="string">&#x27; &#x27;</span>;</span><br><span class="line">    &#125;</span><br><span class="line">    cout &lt;&lt; <span class="string">&#x27;\n&#x27;</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+</article><div class="post-copyright"><div class="post-copyright__author"><span class="post-copyright-meta"><i class="fas fa-circle-user fa-fw"></i>Author: </span><span class="post-copyright-info"><a href="eysikinge@gmail.com">Eysiking</a></span></div><div class="post-copyright__type"><span class="post-copyright-meta"><i class="fas fa-square-arrow-up-right fa-fw"></i>Link: </span><span class="post-copyright-info"><a href="http://lineagestar.github.io/2024/12/18/CodeForces/Codeforces%20Round%20993%20(Div.%204)/">http://lineagestar.github.io/2024/12/18/CodeForces/Codeforces Round 993 (Div. 4)/</a></span></div><div class="post-copyright__notice"><span class="post-copyright-meta"><i class="fas fa-circle-exclamation fa-fw"></i>Copyright Notice: </span><span class="post-copyright-info">All articles on this blog are licensed under <a target="_blank" rel="noopener" href="https://creativecommons.org/licenses/by-nc-sa/4.0/">CC BY-NC-SA 4.0</a> unless otherwise stated.</span></div></div><div class="tag_share"><div class="post-meta__tag-list"><a class="post-meta__tags" href="/tags/CodeForces/">CodeForces</a></div><div class="post-share"><div class="social-share" data-image="/img/23.jpg" data-sites="facebook,twitter,wechat,weibo,qq"></div><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/butterfly-extsrc/sharejs/dist/css/share.min.css" media="print" onload="this.media='all'"><script src="https://cdn.jsdelivr.net/npm/butterfly-extsrc/sharejs/dist/js/social-share.min.js" defer></script></div></div><nav class="pagination-post" id="pagination"><a class="pagination-related" href="/2025/01/20/CodeForces/Codeforces%20Round%20998%20(Div.%203)/" title="Codeforces Round 998 (Div. 3)题解"><img class="cover" src="/img/30.jpg" onerror="onerror=null;src='/img/404.jpg'" alt="cover of previous post"><div class="info"><div class="info-1"><div class="info-item-1">Previous</div><div class="info-item-2">Codeforces Round 998 (Div. 3)题解</div></div><div class="info-2"><div class="info-item-1">A题统计$a_1+a_2$，$a_4-a_2$，$a_5-a_4$，三个数最多有多少个相同即可。 123456789101112131415void solve() &#123;    int a1, a2, a4, a5;    cin &gt;&gt; a1 &gt;&gt; a2 &gt;&gt; a4 &gt;&gt; a5;    int x1 = a1 + a2, x2 = a4 - a2, x3 = a5 - a4;    if (x1 == x2 || x2 == x3 || x1 == x3) &#123;        if (x1 == x2 &amp;&amp; x2 == x3) &#123;            cout &lt;&lt; 3 &lt;&lt; &quot;\n&quot;;        &#125; else &#123;            cout &lt;&lt; 2 &lt;&lt; &quot;\n&quot;;        &#125;    &#125; else &#123;        cout...</div></div></div></a><a class="pagination-related" href="/2024/12/09/CodeForces/Codeforces%20Round%20992%20(Div.%202)/" title="Codeforces Round 992 (Div. 2)题解"><img class="cover" src="/img/21.jpg" onerror="onerror=null;src='/img/404.jpg'" alt="cover of next post"><div class="info text-right"><div class="info-1"><div class="info-item-1">Next</div><div class="info-item-2">Codeforces Round 992 (Div. 2)题解</div></div><div class="info-2"><div class="info-item-1">题目链接 A题</div></div></div></a></nav><div class="relatedPosts"><div class="headline"><i class="fas fa-thumbs-up fa-fw"></i><span>Related Articles</span></div><div class="relatedPosts-list"><a class="pagination-related" href="/2025/03/12/CodeForces/Codeforces%20Round%201009%20(Div.%203)/" title="Codeforces Round 1009(Div. 3)A~G题解"><img class="cover" src="/img/41.jpg" alt="cover"><div class="info text-center"><div class="info-1"><div class="info-item-1"><i class="far fa-calendar-alt fa-fw"></i> 2025-03-12</div><div class="info-item-2">Codeforces Round 1009(Div. 3)A~G题解</div></div><div class="info-2"><div class="info-item-1">比赛链接 A题判断四个数是否相同即可： 12345678910void solve() &#123;    int a, b, c, d;    cin &gt;&gt; a &gt;&gt; b &gt;&gt; c &gt;&gt; d;    std::set&lt;int&gt; s&#123;a, b, c, d&#125;;    if (s.size() == 1) &#123;        cout &lt;&lt; &quot;YES\n&quot;;    &#125; else &#123;        cout &lt;&lt; &quot;NO\n&quot;;    &#125;&#125;  B题对于边$x$，$y$，能构成三角形所能添加的最大边为$x+y-1$。累计加$n-1$次后，数列长度变为1，答案为$\sum_ia_i-n+1$。 123456789void solve() &#123;    int n;    cin &gt;&gt; n;    std::vector&lt;int&gt; a(n);    for...</div></div></div></a><a class="pagination-related" href="/2025/05/13/CodeForces/Codeforces%20Round%201024%20(Div.%202)/" title="Codeforces Round 1024(Div. 2)D~F题解"><img class="cover" src="/img/50.jpg" alt="cover"><div class="info text-center"><div class="info-1"><div class="info-item-1"><i class="far fa-calendar-alt fa-fw"></i> 2025-05-13</div><div class="info-item-2">Codeforces Round 1024(Div. 2)D~F题解</div></div><div class="info-2"><div class="info-item-1">比赛链接 D通过观察规则不难看出所有奇数位置数字和所有偶数位置数字是不互通的。尝试按照规则构造最小字典序序列，可以发现前 $n-3$ 个数字可以通过贪心构造出最小字典序，也就是奇数位置从小到大排列，偶数位置从小到大排列，这样构造之后得到的字典序一定最小，但是规则是一对奇偶位置一起交换，所以需要判断这样构造出来的序列是否合法，如果不合法，应该如何修改。 首先将奇偶位置分离开来分别构造一个数组，然后每次操作会发现，对于奇偶位置操作是相同的，也就是说逆序对相对数量不会发生变化，所以我们不妨直接按照下标进行排序，这样初始奇偶数列的下标的逆序对数量就是0，最后统计排序好的下标的逆序对数量差必须是偶数即可。 123456789101112131415161718192021222324252627282930313233343536373839404142434445464748495051525354555657585960616263646566676869707172737475i64 countInversions(std::vector&lt;int&gt; a) &#123; ...</div></div></div></a><a class="pagination-related" href="/2024/12/06/CodeForces/Codeforces%20Round%20991%20(Div.%203)/" title="Codeforces Round 991 (Div. 3)题解"><img class="cover" src="/img/36.jpg" alt="cover"><div class="info text-center"><div class="info-1"><div class="info-item-1"><i class="far fa-calendar-alt fa-fw"></i> 2024-12-06</div><div class="info-item-2">Codeforces Round 991 (Div. 3)题解</div></div><div class="info-2"><div class="info-item-1">画师：赤倉 题目链接：Codeforces Round 991 (Div. 3) A题123456789101112131415void solve() &#123;    int n, x;    cin &gt;&gt; n &gt;&gt; x;    int sum = 0, ans = 0;    for (int i = 0; i &lt; n; i++) &#123;        string s;        cin &gt;&gt; s;        sum += s.size();        if (sum &lt;= x) &#123;            ans++;                    &#125;    &#125;    cout &lt;&lt; ans &lt;&lt;...</div></div></div></a><a class="pagination-related" href="/2024/12/09/CodeForces/Codeforces%20Round%20992%20(Div.%202)/" title="Codeforces Round 992 (Div. 2)题解"><img class="cover" src="/img/21.jpg" alt="cover"><div class="info text-center"><div class="info-1"><div class="info-item-1"><i class="far fa-calendar-alt fa-fw"></i> 2024-12-09</div><div class="info-item-2">Codeforces Round 992 (Div. 2)题解</div></div><div class="info-2"><div class="info-item-1">题目链接 A题</div></div></div></a><a class="pagination-related" href="/2024/12/03/CodeForces/Codeforces%20Round%20992/" title="Codeforces Round 992题解A~D"><img class="cover" src="/img/19.jpg" alt="cover"><div class="info text-center"><div class="info-1"><div class="info-item-1"><i class="far fa-calendar-alt fa-fw"></i> 2024-12-03</div><div class="info-item-2">Codeforces Round 992题解A~D</div></div><div class="info-2"><div class="info-item-1">比赛链接 A题先求前缀和，如果当前的和可以拼成一个完整的正方形，可以发现它必须是奇数$2k + 1,k\in N^{+}$的平方，直接判断即可。 1234567891011121314151617181920212223242526272829303132std::set&lt;int&gt; ms;void solve() &#123;    int n;    cin &gt;&gt; n;    std::vector&lt;int&gt; a(n);    for (int i = 0; i &lt; n; i++) &#123;        cin &gt;&gt; a[i];        if (i) &#123;            a[i] += a[i - 1];        &#125;    &#125;    int ans = 0;    for (int i = 0; i &lt; n; i++) &#123;        if (ms.find(a[i]) != ms.end()) &#123;            ans++;    ...</div></div></div></a><a class="pagination-related" href="/2024/12/01/CodeForces/Codeforces%20Round%20989/" title="Codeforces Round 989题解"><img class="cover" src="/img/18.jpg" alt="cover"><div class="info text-center"><div class="info-1"><div class="info-item-1"><i class="far fa-calendar-alt fa-fw"></i> 2024-12-01</div><div class="info-item-2">Codeforces Round 989题解</div></div><div class="info-2"><div class="info-item-1">比赛链接 A题给定两个整数$a$，$b$，寻找一个数$m$使得$m &gt;&#x3D; min(a, b) \wedge a \equiv b(\bmod m)$，易知隐含条件$m&lt;&#x3D;lcm(a, b)$，根据根据题目描述$a,b&lt;&#x3D;1000 \rightarrow lcm(a,b)&lt;1e6$，枚举即可。 12345678910void solve() &#123;    int a, b;    cin &gt;&gt; a &gt;&gt; b;    for (int i = std::min(a, b); ; i++) &#123;        if (i % a == i % b) &#123;            cout &lt;&lt; i &lt;&lt; &#x27;\n&#x27;;            return;        &#125;   ...</div></div></div></a></div></div><hr class="custom-hr"/><div id="post-comment"><div class="comment-head"><div class="comment-headline"><i class="fas fa-comments fa-fw"></i><span> Comments</span></div></div><div class="comment-wrap"><div><div id="giscus-wrap"></div></div></div></div></div><div class="aside-content" id="aside-content"><div class="card-widget card-info text-center"><div class="avatar-img"><img src="/img/aili.png" onerror="this.onerror=null;this.src='/img/friend_404.gif'" alt="avatar"/></div><div class="author-info-name">Eysiking</div><div class="author-info-description">Eysiking's Persional Blog</div><div class="site-data"><a href="/archives/"><div class="headline">Articles</div><div class="length-num">27</div></a><a href="/tags/"><div class="headline">Tags</div><div class="length-num">5</div></a><a href="/categories/"><div class="headline">Categories</div><div class="length-num">3</div></a></div><a id="card-info-btn" target="_blank" rel="noopener" href="https://github.com/LineageStar"><i class="fab fa-github"></i><span>GitHub</span></a><div class="card-info-social-icons"><a class="social-icon" href="https://github.com/LineageStar" target="_blank" title="Github"><i class="fab fa-github" style="color: #24292e;"></i></a><a class="social-icon" href="https://eysikinge@gmail.com" target="_blank" title="Email"><i class="fas fa-envelope" style="color: #4a7dbe;"></i></a></div></div><div class="card-widget card-announcement"><div class="item-headline"><i class="fas fa-bullhorn fa-shake"></i><span>Announcement</span></div><div class="announcement_content">二次元&#44;二次元&#44;二次元&#44;IT&#44;CS&#44;技术宅&#44;科幻爱好者&#44;社恐患者</div></div><div class="sticky_layout"><div class="card-widget" id="card-toc"><div class="item-headline"><i class="fas fa-stream"></i><span>Contents</span><span class="toc-percentage"></span></div><div class="toc-content is-expand"><ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#A%E9%A2%98"><span class="toc-number">1.</span> <span class="toc-text">A题</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#B%E9%A2%98"><span class="toc-number">2.</span> <span class="toc-text">B题</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#C%E9%A2%98"><span class="toc-number">3.</span> <span class="toc-text">C题</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#D%E9%A2%98"><span class="toc-number">4.</span> <span class="toc-text">D题</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#E%E9%A2%98"><span class="toc-number">5.</span> <span class="toc-text">E题</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#F%E9%A2%98"><span class="toc-number">6.</span> <span class="toc-text">F题</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#G1%E9%A2%98"><span class="toc-number">7.</span> <span class="toc-text">G1题</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#G2%E9%A2%98"><span class="toc-number">8.</span> <span class="toc-text">G2题</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#H%E9%A2%98"><span class="toc-number">9.</span> <span class="toc-text">H题</span></a></li></ol></div></div><div class="card-widget card-recent-post"><div class="item-headline"><i class="fas fa-history"></i><span>Recent Posts</span></div><div class="aside-list"><div class="aside-list-item"><a class="thumbnail" href="/2025/05/18/CodeForces/Codeforces2109/" title="Codeforces Round 1025(Div. 2)A~E题解"><img src="/img/51.jpg" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="Codeforces Round 1025(Div. 2)A~E题解"/></a><div class="content"><a class="title" href="/2025/05/18/CodeForces/Codeforces2109/" title="Codeforces Round 1025(Div. 2)A~E题解">Codeforces Round 1025(Div. 2)A~E题解</a><time datetime="2025-05-18T05:17:06.562Z" title="Updated 2025-05-18 13:17:06">2025-05-18</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/2025/05/13/CodeForces/Codeforces%20Round%201024%20(Div.%202)/" title="Codeforces Round 1024(Div. 2)D~F题解"><img src="/img/50.jpg" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="Codeforces Round 1024(Div. 2)D~F题解"/></a><div class="content"><a class="title" href="/2025/05/13/CodeForces/Codeforces%20Round%201024%20(Div.%202)/" title="Codeforces Round 1024(Div. 2)D~F题解">Codeforces Round 1024(Div. 2)D~F题解</a><time datetime="2025-05-13T16:08:02.532Z" title="Updated 2025-05-14 00:08:02">2025-05-14</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/2025/03/12/CodeForces/Codeforces%20Round%201009%20(Div.%203)/" title="Codeforces Round 1009(Div. 3)A~G题解"><img src="/img/41.jpg" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="Codeforces Round 1009(Div. 3)A~G题解"/></a><div class="content"><a class="title" href="/2025/03/12/CodeForces/Codeforces%20Round%201009%20(Div.%203)/" title="Codeforces Round 1009(Div. 3)A~G题解">Codeforces Round 1009(Div. 3)A~G题解</a><time datetime="2025-03-17T13:43:12.053Z" title="Updated 2025-03-17 21:43:12">2025-03-17</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/2024/12/04/CodeForces/Educational%20Codeforces%20Round%20172%20(Rated%20for%20Div.%202)/" title="Educational Codeforces Round 172 (Rated for Div. 2)A~D题解"><img src="/img/20.jpg" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="Educational Codeforces Round 172 (Rated for Div. 2)A~D题解"/></a><div class="content"><a class="title" href="/2024/12/04/CodeForces/Educational%20Codeforces%20Round%20172%20(Rated%20for%20Div.%202)/" title="Educational Codeforces Round 172 (Rated for Div. 2)A~D题解">Educational Codeforces Round 172 (Rated for Div. 2)A~D题解</a><time datetime="2025-03-17T13:37:38.345Z" title="Updated 2025-03-17 21:37:38">2025-03-17</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/2024/12/06/CodeForces/Codeforces%20Round%20991%20(Div.%203)/" title="Codeforces Round 991 (Div. 3)题解"><img src="/img/36.jpg" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="Codeforces Round 991 (Div. 3)题解"/></a><div class="content"><a class="title" href="/2024/12/06/CodeForces/Codeforces%20Round%20991%20(Div.%203)/" title="Codeforces Round 991 (Div. 3)题解">Codeforces Round 991 (Div. 3)题解</a><time datetime="2025-03-04T12:09:03.578Z" title="Updated 2025-03-04 20:09:03">2025-03-04</time></div></div></div></div></div></div></main><footer id="footer" style="background-image: url(/img/23.jpg);"><div id="footer-wrap"><div class="copyright">&copy;2024 - 2025 By Eysiking</div><div class="framework-info"><span>Framework </span><a target="_blank" rel="noopener" href="https://hexo.io">Hexo</a><span class="footer-separator">|</span><span>Theme </span><a target="_blank" rel="noopener" href="https://github.com/jerryc127/hexo-theme-butterfly">Butterfly</a></div><div class="footer_custom_text">愿你如蔷薇般坚韧&#44;如星光般璀璨</div></div></footer></div><div id="rightside"><div id="rightside-config-hide"><button id="readmode" type="button" title="Reading Mode"><i class="fas fa-book-open"></i></button><button id="darkmode" type="button" title="Toggle Between Light and Dark Mode"><i class="fas fa-adjust"></i></button><button id="hide-aside-btn" type="button" title="Toggle Between Single-column and Double-column"><i class="fas fa-arrows-alt-h"></i></button></div><div id="rightside-config-show"><button id="rightside-config" type="button" title="Settings"><i class="fas fa-cog fa-spin"></i></button><button class="close" id="mobile-toc-button" type="button" title="Table of Contents"><i class="fas fa-list-ul"></i></button><a id="to_comment" href="#post-comment" title="Scroll to Comments"><i class="fas fa-comments"></i></a><button id="go-up" type="button" title="Back to Top"><span class="scroll-percent"></span><i class="fas fa-arrow-up"></i></button></div></div><div><script src="/js/utils.js"></script><script src="/js/main.js"></script><script>(() => {
+  const panguFn = () => {
+    if (typeof pangu === 'object') pangu.autoSpacingPage()
+    else {
+      btf.getScript('https://cdn.jsdelivr.net/npm/pangu/dist/browser/pangu.min.js')
+        .then(() => {
+          pangu.autoSpacingPage()
+        })
+    }
+  }
+
+  const panguInit = () => {
+    if (true){
+      GLOBAL_CONFIG_SITE.isPost && panguFn()
+    } else {
+      panguFn()
+    }
+  }
+
+  btf.addGlobalFn('pjaxComplete', panguInit, 'pangu')
+  document.addEventListener('DOMContentLoaded', panguInit)
+})()</script><div class="js-pjax"><script>(() => {
+  const loadMathjax = () => {
+    if (!window.MathJax) {
+      window.MathJax = {
+        tex: {
+          inlineMath: [['$', '$'], ['\\(', '\\)']],
+          tags: 'none',
+        },
+        chtml: {
+          scale: 1.1
+        },
+        options: {
+          enableMenu: true,
+          renderActions: {
+            findScript: [10, doc => {
+              for (const node of document.querySelectorAll('script[type^="math/tex"]')) {
+                const display = !!node.type.match(/; *mode=display/)
+                const math = new doc.options.MathItem(node.textContent, doc.inputJax[0], display)
+                const text = document.createTextNode('')
+                node.parentNode.replaceChild(text, node)
+                math.start = {node: text, delim: '', n: 0}
+                math.end = {node: text, delim: '', n: 0}
+                doc.math.push(math)
+              }
+            }, '']
+          }
+        }
+      }
+      
+      const script = document.createElement('script')
+      script.src = 'https://cdn.jsdelivr.net/npm/mathjax/es5/tex-mml-chtml.min.js'
+      script.id = 'MathJax-script'
+      script.async = true
+      document.head.appendChild(script)
+    } else {
+      MathJax.startup.document.state(0)
+      MathJax.texReset()
+      MathJax.typesetPromise()
+    }
+  }
+
+  btf.addGlobalFn('encrypt', loadMathjax, 'mathjax')
+  window.pjax ? loadMathjax() : window.addEventListener('load', loadMathjax)
+})()</script><script>(()=>{
+  const getGiscusTheme = theme => theme === 'dark' ? 'NoBorder Dark' : 'NoBorder Light'
+
+  const loadGiscus = () => {
+    const config = Object.assign({
+      src: 'https://giscus.app/client.js',
+      'data-repo': 'LineageStar/Eysiking-s-personal-blog',
+      'data-repo-id': 'R_kgDONIZRMA',
+      'data-category-id': 'DIC_kwDONIZRMM4Cj37c',
+      'data-mapping': 'pathname',
+      'data-theme': getGiscusTheme(document.documentElement.getAttribute('data-theme')),
+      'data-reactions-enabled': '1',
+      crossorigin: 'anonymous',
+      async: true
+    },null)
+
+    const ele = document.createElement('script')
+    for (let key in config) {
+      ele.setAttribute(key, config[key])
+    }
+    document.getElementById('giscus-wrap').appendChild(ele)
+  }
+
+  const changeGiscusTheme = theme => {
+    const iframe = document.querySelector('#giscus-wrap iframe')
+    if (iframe) {
+      const message = {
+        giscus: {
+          setConfig: {
+            theme: getGiscusTheme(theme)
+          }
+        }
+      }
+      iframe.contentWindow.postMessage(message, 'https://giscus.app')
+    }
+  }
+
+  btf.addGlobalFn('themeChange', changeGiscusTheme, 'giscus')
+
+  if ('Giscus' === 'Giscus' || !true) {
+    if (true) btf.loadComment(document.getElementById('giscus-wrap'), loadGiscus)
+    else loadGiscus()
+  } else {
+    window.loadOtherComment= loadGiscus
+  }
+})()</script></div><script async data-pjax src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script></div></body></html>
