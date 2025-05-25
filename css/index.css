@@ -1381,7 +1381,7 @@ body {
   background: var(--global-bg);
   color: var(--font-color);
   font-size: var(--global-font-size);
-  font-family: HarmonyOS Sans Medium, -apple-system, Microsoft YaHei UI, BlinkMacSystemFont, MesloLGS Nerd Font Mono, 'Segoe UI', 'Helvetica Neue', sans-serif;
+  font-family: LXGW Bright Regular, -apple-system, 'Microsoft YaHei UI', BlinkMacSystemFont, MesloLGS Nerd Font Mono, 'Segoe UI', 'Helvetica Neue', sans-serif;
   line-height: 2;
   -webkit-tap-highlight-color: rgba(0,0,0,0);
   scroll-behavior: smooth;
