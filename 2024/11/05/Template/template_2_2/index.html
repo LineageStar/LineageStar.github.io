@@ -1,0 +1,362 @@
+<!DOCTYPE html><html lang="en" data-theme="light"><head><meta charset="UTF-8"><meta http-equiv="X-UA-Compatible" content="IE=edge"><meta name="viewport" content="width=device-width, initial-scale=1.0,viewport-fit=cover"><title>C++模板基础（一）模板基本技巧（下） | Eysiking</title><meta name="author" content="Eysiking,eysikinge@gmail.com"><meta name="copyright" content="Eysiking"><meta name="format-detection" content="telephone=no"><meta name="theme-color" content="#ffffff"><meta name="description" content="成员模板对于嵌套类和成员函数来说，它们也有可能是模板，下面让我们用C++模板入门（二）类模板中的Stack&lt;&gt;类继续演示。 为了方便，我们截取一部分： 12345678910111213141516171819202122232425262728293031template &lt;typename T&gt;class Stack &#123;public:    Stack() &#x3D;">
+<meta property="og:type" content="article">
+<meta property="og:title" content="C++模板基础（一）模板基本技巧（下）">
+<meta property="og:url" content="http://lineagestar.github.io/2024/11/05/Template/template_2_2/index.html">
+<meta property="og:site_name" content="Eysiking">
+<meta property="og:description" content="成员模板对于嵌套类和成员函数来说，它们也有可能是模板，下面让我们用C++模板入门（二）类模板中的Stack&lt;&gt;类继续演示。 为了方便，我们截取一部分： 12345678910111213141516171819202122232425262728293031template &lt;typename T&gt;class Stack &#123;public:    Stack() &#x3D;">
+<meta property="og:locale" content="en_US">
+<meta property="og:image" content="http://lineagestar.github.io/img/12.jpg">
+<meta property="article:published_time" content="2024-11-05T06:13:02.000Z">
+<meta property="article:modified_time" content="2025-02-13T14:18:43.597Z">
+<meta property="article:author" content="Eysiking">
+<meta property="article:tag" content="CPP-Template">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="http://lineagestar.github.io/img/12.jpg"><link rel="shortcut icon" href="/img/aili.png"><link rel="canonical" href="http://lineagestar.github.io/2024/11/05/Template/template_2_2/index.html"><link rel="preconnect" href="//cdn.jsdelivr.net"/><link rel="preconnect" href="//busuanzi.ibruce.info"/><link rel="manifest" href="/null"/><link rel="stylesheet" href="/css/index.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free/css/all.min.css"><script>
+    (() => {
+      
+    const saveToLocal = {
+      set: (key, value, ttl) => {
+        if (!ttl) return
+        const expiry = Date.now() + ttl * 86400000
+        localStorage.setItem(key, JSON.stringify({ value, expiry }))
+      },
+      get: key => {
+        const itemStr = localStorage.getItem(key)
+        if (!itemStr) return undefined
+        const { value, expiry } = JSON.parse(itemStr)
+        if (Date.now() > expiry) {
+          localStorage.removeItem(key)
+          return undefined
+        }
+        return value
+      }
+    }
+
+    window.btf = {
+      saveToLocal,
+      getScript: (url, attr = {}) => new Promise((resolve, reject) => {
+        const script = document.createElement('script')
+        script.src = url
+        script.async = true
+        Object.entries(attr).forEach(([key, val]) => script.setAttribute(key, val))
+        script.onload = script.onreadystatechange = () => {
+          if (!script.readyState || /loaded|complete/.test(script.readyState)) resolve()
+        }
+        script.onerror = reject
+        document.head.appendChild(script)
+      }),
+      getCSS: (url, id) => new Promise((resolve, reject) => {
+        const link = document.createElement('link')
+        link.rel = 'stylesheet'
+        link.href = url
+        if (id) link.id = id
+        link.onload = link.onreadystatechange = () => {
+          if (!link.readyState || /loaded|complete/.test(link.readyState)) resolve()
+        }
+        link.onerror = reject
+        document.head.appendChild(link)
+      }),
+      addGlobalFn: (key, fn, name = false, parent = window) => {
+        if (!false && key.startsWith('pjax')) return
+        const globalFn = parent.globalFn || {}
+        globalFn[key] = globalFn[key] || {}
+        if (name && globalFn[key][name]) return
+        globalFn[key][name || Object.keys(globalFn[key]).length] = fn
+        parent.globalFn = globalFn
+      }
+    }
+  
+      
+      const activateDarkMode = () => {
+        document.documentElement.setAttribute('data-theme', 'dark')
+        if (document.querySelector('meta[name="theme-color"]') !== null) {
+          document.querySelector('meta[name="theme-color"]').setAttribute('content', '#0d0d0d')
+        }
+      }
+      const activateLightMode = () => {
+        document.documentElement.setAttribute('data-theme', 'light')
+        if (document.querySelector('meta[name="theme-color"]') !== null) {
+          document.querySelector('meta[name="theme-color"]').setAttribute('content', '#ffffff')
+        }
+      }
+
+      btf.activateDarkMode = activateDarkMode
+      btf.activateLightMode = activateLightMode
+
+      const theme = saveToLocal.get('theme')
+    
+          const mediaQueryDark = window.matchMedia('(prefers-color-scheme: dark)')
+          const mediaQueryLight = window.matchMedia('(prefers-color-scheme: light)')
+          
+          if (theme === undefined) {
+            if (mediaQueryLight.matches) activateLightMode()
+            else if (mediaQueryDark.matches) activateDarkMode()
+            else {
+              const hour = new Date().getHours()
+              const isNight = hour <= 6 || hour >= 18
+              isNight ? activateDarkMode() : activateLightMode()
+            }
+            mediaQueryDark.addEventListener('change', () => {
+              if (saveToLocal.get('theme') === undefined) {
+                e.matches ? activateDarkMode() : activateLightMode()
+              }
+            })
+          } else {
+            theme === 'light' ? activateLightMode() : activateDarkMode()
+          }
+        
+      
+      const asideStatus = saveToLocal.get('aside-status')
+      if (asideStatus !== undefined) {
+        document.documentElement.classList.toggle('hide-aside', asideStatus === 'hide')
+      }
+    
+      
+    const detectApple = () => {
+      if (/iPad|iPhone|iPod|Macintosh/.test(navigator.userAgent)) {
+        document.documentElement.classList.add('apple')
+      }
+    }
+    detectApple()
+  
+    })()
+  </script><script>const GLOBAL_CONFIG = {
+  root: '/',
+  algolia: undefined,
+  localSearch: undefined,
+  translate: undefined,
+  noticeOutdate: {"limitDay":365,"position":"bottom","messagePrev":"It has been","messageNext":"days since the last update, the content of the article may be outdated."},
+  highlight: {"plugin":"highlight.js","highlightCopy":true,"highlightLang":true,"highlightHeightLimit":500,"highlightFullpage":true,"highlightMacStyle":true},
+  copy: {
+    success: 'Copy Successful',
+    error: 'Copy Failed',
+    noSupport: 'Browser Not Supported'
+  },
+  relativeDate: {
+    homepage: false,
+    post: false
+  },
+  runtime: '',
+  dateSuffix: {
+    just: 'Just now',
+    min: 'minutes ago',
+    hour: 'hours ago',
+    day: 'days ago',
+    month: 'months ago'
+  },
+  copyright: undefined,
+  lightbox: 'null',
+  Snackbar: undefined,
+  infinitegrid: {
+    js: 'https://cdn.jsdelivr.net/npm/@egjs/infinitegrid/dist/infinitegrid.min.js',
+    buttonText: 'Load More'
+  },
+  isPhotoFigcaption: false,
+  islazyload: false,
+  isAnchor: false,
+  percent: {
+    toc: true,
+    rightside: true,
+  },
+  autoDarkmode: true
+}</script><script id="config-diff">var GLOBAL_CONFIG_SITE = {
+  title: 'C++模板基础（一）模板基本技巧（下）',
+  isPost: true,
+  isHome: false,
+  isHighlightShrink: false,
+  isToc: true,
+  postUpdate: '2025-02-13 22:18:43'
+}</script><meta name="generator" content="Hexo 7.3.0"></head><body><div id="loading-box"><div class="loading-left-bg"></div><div class="loading-right-bg"></div><div class="spinner-box"><div class="configure-border-1"><div class="configure-core"></div></div><div class="configure-border-2"><div class="configure-core"></div></div><div class="loading-word">Loading...</div></div></div><script>(()=>{
+  const $loadingBox = document.getElementById('loading-box')
+  const $body = document.body
+  const preloader = {
+    endLoading: () => {
+      $body.style.overflow = ''
+      $loadingBox.classList.add('loaded')
+    },
+    initLoading: () => {
+      $body.style.overflow = 'hidden'
+      $loadingBox.classList.remove('loaded')
+    }
+  }
+
+  preloader.initLoading()
+  window.addEventListener('load', preloader.endLoading)
+
+  if (false) {
+    btf.addGlobalFn('pjaxSend', preloader.initLoading, 'preloader_init')
+    btf.addGlobalFn('pjaxComplete', preloader.endLoading, 'preloader_end')
+  }
+})()</script><div id="web_bg" style="background: linear-gradient(20deg, #fbc2eb 0%, #a6c1ee 100%);"></div><div id="sidebar"><div id="menu-mask"></div><div id="sidebar-menus"><div class="avatar-img text-center"><img src="/img/aili.png" onerror="onerror=null;src='/img/friend_404.gif'" alt="avatar"/></div><div class="site-data text-center"><a href="/archives/"><div class="headline">Articles</div><div class="length-num">44</div></a><a href="/tags/"><div class="headline">Tags</div><div class="length-num">6</div></a><a href="/categories/"><div class="headline">Categories</div><div class="length-num">3</div></a></div><div class="menus_items"><div class="menus_item"><a class="site-page" href="/"><i class="fa-fw fas fa-home"></i><span> Home</span></a></div><div class="menus_item"><span class="site-page group hide"><i class="fa-fw fas fa-list"></i><span> List</span><i class="fas fa-chevron-down"></i></span><ul class="menus_item_child"><li><a class="site-page child" href="/music/"><i class="fa-fw fas fa-music"></i><span> Music</span></a></li><li><a class="site-page child" href="/movies/"><i class="fa-fw fas fa-video"></i><span> Movie</span></a></li></ul></div><div class="menus_item"><a class="site-page" href="/archives/"><i class="fa-fw fas fa-archive"></i><span> Archives</span></a></div><div class="menus_item"><span class="site-page group hide"><i class="fa-fw fas fa-tags"></i><span> Tags</span><i class="fas fa-chevron-down"></i></span><ul class="menus_item_child"><li><a class="site-page child" href="https://lineagestar.github.io/tags/CPP-Thread/"><i class="fa-fw fas fa-solid fa-paperclip"></i><span> CPP-Thread</span></a></li><li><a class="site-page child" href="https://lineagestar.github.io/tags/CPP-Template/"><i class="fa-fw fas fa-solid fa-paperclip"></i><span> CPP-Template</span></a></li><li><a class="site-page child" href="https://lineagestar.github.io/tags/Assembly/"><i class="fa-fw fas fa-solid fa-paperclip"></i><span> Assembly</span></a></li></ul></div><div class="menus_item"><span class="site-page group hide"><i class="fa-fw fas fa-folder-open"></i><span> Categories</span><i class="fas fa-chevron-down"></i></span><ul class="menus_item_child"><li><a class="site-page child" href="https://lineagestar.github.io/categories/CPP/"><i class="fa-fw fas fa-regular fa-file"></i><span> CPP</span></a></li><li><a class="site-page child" href="https://lineagestar.github.io/categories/Assembly/"><i class="fa-fw fas fa-regular fa-file"></i><span> Assembly</span></a></li></ul></div><div class="menus_item"><span class="site-page group hide"><i class="fa-fw fas fa-link"></i><span> Link</span><i class="fas fa-chevron-down"></i></span><ul class="menus_item_child"><li><a class="site-page child" target="_blank" rel="noopener" href="https://en.cppreference.com/w/Main_Page"><i class="fa-fw fa-solid fa-code"></i><span> cppreference</span></a></li><li><a class="site-page child" target="_blank" rel="noopener" href="https://www.youtube.com/"><i class="fa-fw fa-brands fa-youtube"></i><span> Youtube</span></a></li><li><a class="site-page child" target="_blank" rel="noopener" href="https://github.com/"><i class="fa-fw fa-brands fa-square-github"></i><span> GitHub</span></a></li><li><a class="site-page child" target="_blank" rel="noopener" href="https://hoyue.fun/animes.html"><i class="fa-fw fa-brands fa-react"></i><span> Cartoon</span></a></li></ul></div><div class="menus_item"><a class="site-page" href="/about/"><i class="fa-fw fas fa-heart"></i><span> About</span></a></div></div></div></div><div class="post" id="body-wrap"><header class="post-bg" id="page-header" style="background-image: url(/img/12.jpg);"><nav id="nav"><span id="blog-info"><a class="nav-site-title" href="/"><img class="site-icon" src="/img/aili.png" alt="Logo"><span class="site-name">Eysiking</span></a><a class="nav-page-title" href="/"><span class="site-name">C++模板基础（一）模板基本技巧（下）</span></a></span><div id="menus"><div class="menus_items"><div class="menus_item"><a class="site-page" href="/"><i class="fa-fw fas fa-home"></i><span> Home</span></a></div><div class="menus_item"><span class="site-page group hide"><i class="fa-fw fas fa-list"></i><span> List</span><i class="fas fa-chevron-down"></i></span><ul class="menus_item_child"><li><a class="site-page child" href="/music/"><i class="fa-fw fas fa-music"></i><span> Music</span></a></li><li><a class="site-page child" href="/movies/"><i class="fa-fw fas fa-video"></i><span> Movie</span></a></li></ul></div><div class="menus_item"><a class="site-page" href="/archives/"><i class="fa-fw fas fa-archive"></i><span> Archives</span></a></div><div class="menus_item"><span class="site-page group hide"><i class="fa-fw fas fa-tags"></i><span> Tags</span><i class="fas fa-chevron-down"></i></span><ul class="menus_item_child"><li><a class="site-page child" href="https://lineagestar.github.io/tags/CPP-Thread/"><i class="fa-fw fas fa-solid fa-paperclip"></i><span> CPP-Thread</span></a></li><li><a class="site-page child" href="https://lineagestar.github.io/tags/CPP-Template/"><i class="fa-fw fas fa-solid fa-paperclip"></i><span> CPP-Template</span></a></li><li><a class="site-page child" href="https://lineagestar.github.io/tags/Assembly/"><i class="fa-fw fas fa-solid fa-paperclip"></i><span> Assembly</span></a></li></ul></div><div class="menus_item"><span class="site-page group hide"><i class="fa-fw fas fa-folder-open"></i><span> Categories</span><i class="fas fa-chevron-down"></i></span><ul class="menus_item_child"><li><a class="site-page child" href="https://lineagestar.github.io/categories/CPP/"><i class="fa-fw fas fa-regular fa-file"></i><span> CPP</span></a></li><li><a class="site-page child" href="https://lineagestar.github.io/categories/Assembly/"><i class="fa-fw fas fa-regular fa-file"></i><span> Assembly</span></a></li></ul></div><div class="menus_item"><span class="site-page group hide"><i class="fa-fw fas fa-link"></i><span> Link</span><i class="fas fa-chevron-down"></i></span><ul class="menus_item_child"><li><a class="site-page child" target="_blank" rel="noopener" href="https://en.cppreference.com/w/Main_Page"><i class="fa-fw fa-solid fa-code"></i><span> cppreference</span></a></li><li><a class="site-page child" target="_blank" rel="noopener" href="https://www.youtube.com/"><i class="fa-fw fa-brands fa-youtube"></i><span> Youtube</span></a></li><li><a class="site-page child" target="_blank" rel="noopener" href="https://github.com/"><i class="fa-fw fa-brands fa-square-github"></i><span> GitHub</span></a></li><li><a class="site-page child" target="_blank" rel="noopener" href="https://hoyue.fun/animes.html"><i class="fa-fw fa-brands fa-react"></i><span> Cartoon</span></a></li></ul></div><div class="menus_item"><a class="site-page" href="/about/"><i class="fa-fw fas fa-heart"></i><span> About</span></a></div></div><div id="toggle-menu"><span class="site-page"><i class="fas fa-bars fa-fw"></i></span></div></div></nav><div id="post-info"><h1 class="post-title">C++模板基础（一）模板基本技巧（下）</h1><div id="post-meta"><div class="meta-firstline"><span class="post-meta-date"><i class="far fa-calendar-alt fa-fw post-meta-icon"></i><span class="post-meta-label">Created</span><time class="post-meta-date-created" datetime="2024-11-05T06:13:02.000Z" title="Created 2024-11-05 14:13:02">2024-11-05</time><span class="post-meta-separator">|</span><i class="fas fa-history fa-fw post-meta-icon"></i><span class="post-meta-label">Updated</span><time class="post-meta-date-updated" datetime="2025-02-13T14:18:43.597Z" title="Updated 2025-02-13 22:18:43">2025-02-13</time></span><span class="post-meta-categories"><span class="post-meta-separator">|</span><i class="fas fa-inbox fa-fw post-meta-icon"></i><a class="post-meta-categories" href="/categories/CPP/">CPP</a></span></div><div class="meta-secondline"><span class="post-meta-separator">|</span><span class="post-meta-wordcount"><i class="far fa-file-word fa-fw post-meta-icon"></i><span class="post-meta-label">Word Count:</span><span class="word-count">1.9k</span><span class="post-meta-separator">|</span><i class="far fa-clock fa-fw post-meta-icon"></i><span class="post-meta-label">Reading Time:</span><span>7mins</span></span><span class="post-meta-separator">|</span><span class="post-meta-pv-cv" id="" data-flag-title=""><i class="far fa-eye fa-fw post-meta-icon"></i><span class="post-meta-label">Post Views:</span><span id="busuanzi_value_page_pv"><i class="fa-solid fa-spinner fa-spin"></i></span></span></div></div></div></header><main class="layout" id="content-inner"><div id="post"><article class="post-content" id="article-container"><h1 id="成员模板"><a href="#成员模板" class="headerlink" title="成员模板"></a>成员模板</h1><p>对于嵌套类和成员函数来说，它们也有可能是模板，下面让我们用<a href="https://lineagestar.github.io/2024/11/01/template2/">C++模板入门（二）类模板</a>中的<code>Stack&lt;&gt;</code>类继续演示。</p>
+<p>为了方便，我们截取一部分：</p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">template</span> &lt;<span class="keyword">typename</span> T&gt;</span><br><span class="line"><span class="keyword">class</span> <span class="title class_">Stack</span> &#123;</span><br><span class="line"><span class="keyword">public</span>:</span><br><span class="line">    <span class="built_in">Stack</span>() = <span class="keyword">default</span>;</span><br><span class="line">    ~<span class="built_in">Stack</span>() = <span class="keyword">default</span>;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="type">void</span> <span class="title">push</span><span class="params">(<span class="type">const</span> T&amp; value)</span> </span>&#123;</span><br><span class="line">        stack.<span class="built_in">push_back</span>(value);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="type">void</span> <span class="title">pop</span><span class="params">()</span> </span>&#123;</span><br><span class="line">        <span class="built_in">assert</span>(!stack.<span class="built_in">empty</span>());</span><br><span class="line">        stack.<span class="built_in">pop_back</span>();</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="type">const</span> T&amp; <span class="title">top</span><span class="params">()</span> <span class="type">const</span> </span>&#123;</span><br><span class="line">        <span class="built_in">assert</span>(!stack.<span class="built_in">empty</span>());</span><br><span class="line">        <span class="keyword">return</span> stack.<span class="built_in">back</span>();</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="type">bool</span> <span class="title">empty</span><span class="params">()</span> <span class="type">const</span> </span>&#123;</span><br><span class="line">        <span class="keyword">return</span> stack.<span class="built_in">empty</span>();</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="type">size_t</span> <span class="title">size</span><span class="params">()</span> <span class="type">const</span> </span>&#123;</span><br><span class="line">        <span class="keyword">return</span> stack.<span class="built_in">size</span>();</span><br><span class="line">    &#125;</span><br><span class="line"><span class="keyword">private</span>:</span><br><span class="line">    std::vector&lt;T&gt; stack;</span><br><span class="line">&#125;;</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+<p>如果我们不使用模板类，想要给它定义一个拷贝构造函数或者赋值函数，那么两个<code>Stack&lt;&gt;</code>类的类型必须相同，即时它们的类型之间可以发生隐式转换，由于内部使用的是<code>std::vector&lt;&gt;</code>，所以隐式拷贝构造函数即可实现功能：</p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">Stack</span>(<span class="type">const</span> Stack &amp;stack) = <span class="keyword">default</span>;</span><br><span class="line">Stack &amp;<span class="keyword">operator</span>=(<span class="type">const</span> Stack &amp;stack) = <span class="keyword">default</span>;</span><br></pre></td></tr></table></figure>
+
+<p>问题也正如我们所说，如果我们想将一个<code>Stack&lt;double&gt;</code>类型的栈拷贝构造或者赋值给当前指定为<code>Stack&lt;int&gt;</code>类型的栈对象时，会出现错误。这种问题我们之前也提到过，模板支持简单的类型退化操作，却并不支持隐式的类型转换。</p>
+<p>这时候我们就可以将拷贝构造函数或者赋值函数声明为函数模板：</p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">template</span> &lt;<span class="keyword">typename</span> U&gt;</span><br><span class="line"><span class="built_in">Stack</span>(<span class="type">const</span> Stack&lt;U&gt; &amp;stack)</span><br><span class="line">&#123;</span><br><span class="line">	<span class="keyword">for</span> (<span class="type">const</span> U &amp;value : stack.stack)</span><br><span class="line">	&#123;</span><br><span class="line">        <span class="built_in">push</span>(value);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"><span class="keyword">template</span> &lt;<span class="keyword">typename</span> U&gt;</span><br><span class="line">Stack &amp;<span class="keyword">operator</span>=(<span class="type">const</span> Stack&lt;U&gt; &amp;stack)</span><br><span class="line">&#123;</span><br><span class="line">    <span class="keyword">if</span> (<span class="keyword">this</span> != &amp;stack)</span><br><span class="line">    &#123;</span><br><span class="line">        stack.<span class="built_in">clear</span>();</span><br><span class="line">        <span class="keyword">for</span> (<span class="type">const</span> U &amp;value : stack.stack)</span><br><span class="line">        &#123;</span><br><span class="line">            <span class="built_in">push</span>(value);</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">return</span> *<span class="keyword">this</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>这样，在无法匹配与当前对象类型相同的拷贝构造或者赋值语句时，就会调用这两个函数模板，进行相应的操作。当我们尝试使用这两个函数时，如：</p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">Stack&lt;<span class="type">int</span>&gt; example4;</span><br><span class="line">example<span class="number">4.</span><span class="built_in">push</span>(<span class="number">1</span>);</span><br><span class="line">example<span class="number">4.</span><span class="built_in">push</span>(<span class="number">2</span>);</span><br><span class="line">example<span class="number">4.</span><span class="built_in">push</span>(<span class="number">3</span>);</span><br><span class="line">Stack&lt;<span class="type">double</span>&gt; example5 = example4;</span><br></pre></td></tr></table></figure>
+
+<p>程序出现了报错<code>error: &#39;std::vector&lt;int, std::allocator&lt;int&gt; &gt; Stack&lt;int&gt;::stack&#39; is private within this contex for (const U &amp;value : stack.stack)</code>是的，不像同种类在类内部可以互相使用私有成员，我们之前提到过，每个实例化的不同的类都相互独立，所以对于不同的实例化版本，即使是在类内部，私有成员也不能访问，我们只能通过模板类提供的公有接口实现。</p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br></pre></td><td class="code"><pre><span class="line">std::vector&lt;T&gt;::<span class="function">const_iterator <span class="title">begin</span><span class="params">()</span> <span class="type">const</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">    <span class="keyword">return</span> stack.<span class="built_in">begin</span>();</span><br><span class="line">&#125;</span><br><span class="line">std::vector&lt;T&gt;::<span class="function">const_iterator <span class="title">end</span><span class="params">()</span> <span class="type">const</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">    <span class="keyword">return</span> stack.<span class="built_in">end</span>();</span><br><span class="line">&#125;</span><br><span class="line"><span class="keyword">template</span> &lt;<span class="keyword">typename</span> U&gt;</span><br><span class="line"><span class="built_in">Stack</span>(<span class="type">const</span> Stack&lt;U&gt; &amp;stack)</span><br><span class="line">&#123;</span><br><span class="line">    <span class="keyword">typename</span> std::vector&lt;U&gt;::const_iterator it = stack.<span class="built_in">begin</span>();</span><br><span class="line">    <span class="keyword">typename</span> std::vector&lt;U&gt;::const_iterator end = stack.<span class="built_in">end</span>();</span><br><span class="line">    <span class="keyword">for</span> (; it != end; ++it)</span><br><span class="line">    &#123;</span><br><span class="line">        <span class="built_in">push</span>(*it);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"><span class="keyword">template</span> &lt;<span class="keyword">typename</span> U&gt;</span><br><span class="line">Stack &amp;<span class="keyword">operator</span>=(<span class="type">const</span> Stack&lt;U&gt; &amp;stack)</span><br><span class="line">&#123;</span><br><span class="line">    <span class="keyword">if</span> (<span class="keyword">this</span> != &amp;stack)</span><br><span class="line">    &#123;</span><br><span class="line">        stack.<span class="built_in">clear</span>();</span><br><span class="line">        <span class="keyword">typename</span> std::vector&lt;U&gt;::const_iterator it = stack.<span class="built_in">begin</span>();</span><br><span class="line">        <span class="keyword">typename</span> std::vector&lt;U&gt;::const_iterator end = stack.<span class="built_in">end</span>();</span><br><span class="line">        <span class="keyword">for</span> (; it != end; ++it)</span><br><span class="line">        &#123;</span><br><span class="line">            <span class="built_in">push</span>(*it);</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">return</span> *<span class="keyword">this</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>我们提供了获取指向栈顶和栈底的<code>const_iterator</code>（事实上就是使用的<code>std::vector&lt;&gt;</code>的迭代器）的公有方法，来帮助我们实现功能。注意这种转换只是弥补了可以进行类型转换的数据类型间的拷贝构造和赋值等问题，如果你想将一个<code>std::string</code>类型的栈赋值给<code>int</code>类型的栈，毫无疑问它将在实例化的函数模板内部报错。</p>
+<h2 id="template构造"><a href="#template构造" class="headerlink" title=".template构造"></a><code>.template</code>构造</h2><p>有时，在调用成员模板时，需要显式限定模板实参。在这种类型下，必须使用<code>template</code>关键字来确保符号<code>&lt;</code>会解析为模板实参列表的起始符：</p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">template</span> &lt;<span class="type">unsigned</span> <span class="type">int</span> N&gt;</span><br><span class="line"><span class="function"><span class="type">void</span> <span class="title">printBitset</span><span class="params">(std::bitset&lt;N&gt; <span class="type">const</span> &amp;bitset)</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">    std::cout &lt;&lt; bitset.<span class="keyword">template</span> to_string&lt;<span class="type">char</span>, std::char_traits&lt;<span class="type">char</span>&gt;, std::allocator&lt;<span class="type">char</span>&gt;&gt;() &lt;&lt; <span class="string">&#x27;\n&#x27;</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>对于<code>bitset</code>，调用了其内部成员函数模板<code>to_string()</code>，同时显式指定字符串类型的详细信息（to_string函数后面的所有模板参数信息）。如果不额外使用<code>.template</code>，编译器就会认为<code>to_string</code>后面的<code>&lt;</code>是小于号。注意只有点号<code>.</code>之前的构造对象依赖模板参数时，才会这样使用，如这个例子中的<code>bitset</code>依赖于参数<code>unsigned int N</code>。</p>
+<p><code>.template</code>（以及和它作用相似的<code>-&gt;template</code>和<code>::template</code>）应该只在模板内部使用，并且只有当位于它们之前的对象依赖模板参数时才使用。</p>
+<h2 id="泛型lambda和成员模板"><a href="#泛型lambda和成员模板" class="headerlink" title="泛型lambda和成员模板"></a>泛型lambda和成员模板</h2><p>C++14新增了如下的lambda表达式：</p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">auto</span> f = [](<span class="keyword">auto</span> x, <span class="keyword">auto</span> y)</span><br><span class="line">&#123;</span><br><span class="line">    <span class="keyword">return</span> x + y;</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
+
+<p>它接收两个任意参数的x和y，并返回它们的和，下面是它内部的一种实现形式：</p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">class</span> <span class="title class_">__lambda_6_13</span></span><br><span class="line">&#123;</span><br><span class="line"><span class="keyword">public</span>:</span><br><span class="line">    <span class="keyword">template</span> &lt;<span class="keyword">class</span> <span class="title class_">type_parameter_0_0</span>, <span class="keyword">class</span> <span class="title class_">type_parameter_0_1</span>&gt;</span><br><span class="line">    <span class="keyword">inline</span> <span class="comment">/*constexpr */</span> <span class="function"><span class="keyword">auto</span> <span class="title">operator</span><span class="params">()</span><span class="params">(type_parameter_0_0 x, type_parameter_0_1 y)</span> <span class="type">const</span></span></span><br><span class="line"><span class="function">    </span>&#123;</span><br><span class="line">        <span class="keyword">return</span> x + y;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">private</span>:</span><br><span class="line">    <span class="keyword">template</span> &lt;<span class="keyword">class</span> <span class="title class_">type_parameter_0_0</span>, <span class="keyword">class</span> <span class="title class_">type_parameter_0_1</span>&gt;</span><br><span class="line">    <span class="type">static</span> <span class="keyword">inline</span> <span class="comment">/*constexpr */</span> <span class="keyword">auto</span> __invoke(type_parameter_0_0 x, type_parameter_0_1 y)</span><br><span class="line">    &#123;</span><br><span class="line">        <span class="keyword">return</span> __lambda_6_13&#123;&#125;.<span class="built_in">operator</span>()&lt;type_parameter_0_0, type_parameter_0_1&gt;(x, y);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">public</span>:</span><br><span class="line">    <span class="comment">// /*constexpr */ __lambda_6_13() = default;</span></span><br><span class="line">&#125;;</span><br><span class="line"></span><br><span class="line">__lambda_6_13 f = __lambda_6_13&#123;&#125;;</span><br></pre></td></tr></table></figure>
+
+<p>可以看到，这里的泛型lambda表达式其实就是使用了函数模板。</p>
+<h1 id="变量模板"><a href="#变量模板" class="headerlink" title="变量模板"></a>变量模板</h1><p>从C++14开始，变量也可以通过特定类型来参数化，称之为变量模板：</p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">template</span> &lt;<span class="keyword">typename</span> T&gt;</span><br><span class="line"><span class="keyword">constexpr</span> T pi = <span class="built_in">T</span>(<span class="number">3.1415926535897932385L</span>);</span><br><span class="line">std::cout &lt;&lt; pi&lt;<span class="type">double</span>&gt; &lt;&lt; <span class="string">&#x27;\n&#x27;</span>;</span><br><span class="line">std::cout &lt;&lt; pi&lt;<span class="type">float</span>&gt; &lt;&lt; <span class="string">&#x27;\n&#x27;</span>;</span><br><span class="line">std::cout &lt;&lt; pi&lt;<span class="type">int</span>&gt; &lt;&lt; <span class="string">&#x27;\n&#x27;</span>;</span><br></pre></td></tr></table></figure>
+
+<h2 id="数据成员的变量模板"><a href="#数据成员的变量模板" class="headerlink" title="数据成员的变量模板"></a>数据成员的变量模板</h2><p>变量模板的一个应用就是定义代表类模板成员的变量，如：</p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">template</span> &lt;<span class="keyword">typename</span> T&gt;</span><br><span class="line"><span class="keyword">class</span> <span class="title class_">MyClass</span></span><br><span class="line">&#123;</span><br><span class="line"><span class="keyword">public</span>:</span><br><span class="line">    <span class="type">static</span> <span class="keyword">constexpr</span> <span class="type">int</span> max = <span class="number">1000</span>;</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
+
+<p>我们可以对<code>MyClass</code>类进行特化，从而获得不同的<code>max</code>值。对于<code>MyClass</code>类的不同实例化版本，我们可以为它们定义：</p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">template</span> &lt;<span class="keyword">typename</span> T&gt;</span><br><span class="line"><span class="type">int</span> mymax = MyClass&lt;T&gt;::max;</span><br></pre></td></tr></table></figure>
+
+<p>那么我们在使用时就可以直接使用<code>mymax&lt;T&gt;</code>而非<code>MyClass&lt;T&gt;::max</code>，这就有了我们如下标准库中的：</p>
+<h2 id="类型特征后缀-v"><a href="#类型特征后缀-v" class="headerlink" title="类型特征后缀_v"></a>类型特征后缀_v</h2><p>自C++17后，标准库使用了变量模板对标准库中所有的萃取所得为<code>bool</code>值的类型特征定义了快捷表达式，如：</p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">std::is_pointer&lt;T&gt;::val</span><br></pre></td></tr></table></figure>
+
+<p>可以写作：</p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">std::is_pointerv&lt;T&gt;</span><br></pre></td></tr></table></figure>
+
+<p>标准库中的定义：</p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">template</span> &lt;<span class="keyword">typename</span> _Tp&gt;</span><br><span class="line"><span class="keyword">inline</span> <span class="keyword">constexpr</span> <span class="type">bool</span> is_pointer_v = is_pointer&lt;_Tp&gt;::value;</span><br></pre></td></tr></table></figure>
+
+<h1 id="模板的模板参数简介"><a href="#模板的模板参数简介" class="headerlink" title="模板的模板参数简介"></a>模板的模板参数简介</h1><p>我们可以让模板的参数也是一个模板，比如我们想自定义<code>Stack&lt;&gt;</code>类的存储方式，就可以指定为它传入一个模板容器，如果不使用模板参数，我们需要标明两次元素类型，在模板类声明中：</p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">template</span> &lt;<span class="keyword">typename</span> T, <span class="keyword">typename</span> Container = std::vector&lt;T&gt;&gt;</span><br><span class="line"><span class="keyword">class</span> Stack;</span><br></pre></td></tr></table></figure>
+
+<p>注：声明模板类时若注明默认参数，那么再定义模板类时不需要再次指明默认参数。</p>
+<p>使用：</p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">Stack&lt;<span class="type">int</span>, std::vector&lt;<span class="type">int</span>&gt;&gt; stack;</span><br></pre></td></tr></table></figure>
+
+<p>有没有方法能够只声明一次类型呢，看下面一个例子，来实例一个使用<code>std::vector&lt;int&gt;</code>存储的栈，如果我们使用模板参数，那么便不需要声明两次类型：</p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">Stack&lt;std::vector&lt;<span class="type">int</span>&gt;&gt; stack;</span><br></pre></td></tr></table></figure>
+
+<p>我们在参数中也使用了一个模板类，其定义需要如下实现形式：</p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">template</span> &lt;<span class="keyword">template</span> &lt;<span class="keyword">typename</span> T&gt; <span class="keyword">typename</span> Container&gt;</span><br><span class="line"><span class="keyword">class</span> <span class="title class_">Stack</span>;</span><br></pre></td></tr></table></figure>
+
+<p>这样，我们就可以向模板参数中再传递一个模板。</p>
+</article><div class="post-copyright"><div class="post-copyright__author"><span class="post-copyright-meta"><i class="fas fa-circle-user fa-fw"></i>Author: </span><span class="post-copyright-info"><a href="eysikinge@gmail.com">Eysiking</a></span></div><div class="post-copyright__type"><span class="post-copyright-meta"><i class="fas fa-square-arrow-up-right fa-fw"></i>Link: </span><span class="post-copyright-info"><a href="http://lineagestar.github.io/2024/11/05/Template/template_2_2/">http://lineagestar.github.io/2024/11/05/Template/template_2_2/</a></span></div><div class="post-copyright__notice"><span class="post-copyright-meta"><i class="fas fa-circle-exclamation fa-fw"></i>Copyright Notice: </span><span class="post-copyright-info">All articles on this blog are licensed under <a target="_blank" rel="noopener" href="https://creativecommons.org/licenses/by-nc-sa/4.0/">CC BY-NC-SA 4.0</a> unless otherwise stated.</span></div></div><div class="tag_share"><div class="post-meta__tag-list"><a class="post-meta__tags" href="/tags/CPP-Template/">CPP-Template</a></div><div class="post-share"><div class="social-share" data-image="/img/12.jpg" data-sites="facebook,twitter,wechat,weibo,qq"></div><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/butterfly-extsrc/sharejs/dist/css/share.min.css" media="print" onload="this.media='all'"><script src="https://cdn.jsdelivr.net/npm/butterfly-extsrc/sharejs/dist/js/social-share.min.js" defer></script></div></div><nav class="pagination-post" id="pagination"><a class="pagination-related" href="/2024/11/05/template_2_2/" title="C++模板基础（一）模板基本技巧（下）"><img class="cover" src="/img/12.jpg" onerror="onerror=null;src='/img/404.jpg'" alt="cover of previous post"><div class="info"><div class="info-1"><div class="info-item-1">Previous</div><div class="info-item-2">C++模板基础（一）模板基本技巧（下）</div></div><div class="info-2"><div class="info-item-1">成员模板对于嵌套类和成员函数来说，它们也有可能是模板，下面让我们用C++模板入门（二）类模板中的Stack&lt;&gt;类继续演示。 为了方便，我们截取一部分： 12345678910111213141516171819202122232425262728293031template &lt;typename T&gt;class Stack &#123;public:    Stack() = default;    ~Stack() = default;    void push(const T&amp; value) &#123;        stack.push_back(value);    &#125;    void pop() &#123;        assert(!stack.empty());        stack.pop_back();    &#125;    const T&amp; top() const &#123;        assert(!stack.empty());        return stack.back();  ...</div></div></div></a><a class="pagination-related" href="/2024/11/04/template_2_1/" title="C++模板基础（一）模板基本技巧（上）"><img class="cover" src="/img/11.jpg" onerror="onerror=null;src='/img/404.jpg'" alt="cover of next post"><div class="info text-right"><div class="info-1"><div class="info-item-1">Next</div><div class="info-item-2">C++模板基础（一）模板基本技巧（上）</div></div><div class="info-2"><div class="info-item-1">关键字typenameC++在标准化过程中，引入了关键字typename来说明模板内部的某个标识符是一种类型： 12345678910111213141516171819202122232425#include &lt;iostream&gt;class B&#123;public:    using Subtype = int;&#125;;template &lt;typename T&gt;class A&#123;public:    typename T::Subtype *ptr;&#125;;int main()&#123;    A&lt;B&gt; a;    a.ptr = new int(1);    std::cout &lt;&lt; *a.ptr &lt;&lt; std::endl;    delete a.ptr;    return...</div></div></div></a></nav><div class="relatedPosts"><div class="headline"><i class="fas fa-thumbs-up fa-fw"></i><span>Related Articles</span></div><div class="relatedPosts-list"><a class="pagination-related" href="/2024/11/01/template2/" title="C++模板入门（二）类模板"><img class="cover" src="/img/7.jpg" alt="cover"><div class="info text-center"><div class="info-1"><div class="info-item-1"><i class="far fa-calendar-alt fa-fw"></i> 2024-11-01</div><div class="info-item-2">C++模板入门（二）类模板</div></div><div class="info-2"><div class="info-item-1">一、类模板初探类模板的实现下面是一个简单的Stack模板类 123456789101112131415161718192021222324252627282930template &lt;typename T&gt;class Stack &#123;public:    Stack() = default;    ~Stack() = default;    void push(const T&amp; value) &#123;        stack.push_back(value);    &#125;    void pop() &#123;        assert(!stack.empty());        stack.pop_back();    &#125;    const T&amp; top() const &#123;        assert(!stack.empty());        return stack.back();    &#125;    bool empty() const &#123;        return...</div></div></div></a><a class="pagination-related" href="/2024/11/02/template3/" title="C++模板入门（三）非类型参数"><img class="cover" src="/img/8.jpg" alt="cover"><div class="info text-center"><div class="info-1"><div class="info-item-1"><i class="far fa-calendar-alt fa-fw"></i> 2024-11-02</div><div class="info-item-2">C++模板入门（三）非类型参数</div></div><div class="info-2"><div class="info-item-1">非类型的类模板参数先让我们用标准库中的std::array定义一个Stack： 1234567891011121314151617181920212223242526272829303132333435363738template &lt;typename T, std::size_t Maxsize&gt;class Stack&#123;private:    std::array&lt;T, Maxsize&gt; stack;    std::size_t numElems = 0;public:    Stack() = default;    ~Stack() = default;    void push(const T &amp;value)    &#123;        stack[numElems++] = value;    &#125;    void pop()    &#123;        assert(numElems &gt; 0);        --numElems;    &#125;    const T &amp;top()...</div></div></div></a><a class="pagination-related" href="/2024/11/03/template4/" title="C++模板入门（四）变参模板（上）"><img class="cover" src="/img/9.jpg" alt="cover"><div class="info text-center"><div class="info-1"><div class="info-item-1"><i class="far fa-calendar-alt fa-fw"></i> 2024-11-03</div><div class="info-item-2">C++模板入门（四）变参模板（上）</div></div><div class="info-2"><div class="info-item-1">变参模板简介从C++11标准起，模板参数可以接收任意数量可变的模板实参。这个特性允许在必须传递任意数量和类型的实参的地方使用模板。一个典型的应用是通过类或者框架传递数量和类型都未定的参数，另一个应用是提供泛型代码处理任意数量和类型的参数。 变参模板实例一个接收任意多参数的print()函数如下： 12345678910111213141516#include &lt;bitset&gt;#include &lt;iostream&gt;void print() &#123;&#125;template &lt;typename T, typename... Types&gt;void print(const T &amp;firstArg, const Types &amp;...args)&#123;    std::cout &lt;&lt; firstArg &lt;&lt; std::endl;    print(args...);&#125;int main()&#123;    print(7.5, &quot;hello&quot;,...</div></div></div></a><a class="pagination-related" href="/2024/11/03/template5/" title="C++模板入门（四）变参模板（下）"><img class="cover" src="/img/10.jpg" alt="cover"><div class="info text-center"><div class="info-1"><div class="info-item-1"><i class="far fa-calendar-alt fa-fw"></i> 2024-11-03</div><div class="info-item-2">C++模板入门（四）变参模板（下）</div></div><div class="info-2"><div class="info-item-1">变参类模板和变参表达式变参表达式计算应用变参表达式不仅仅可以传递所有参数，而且可以进行计算： 123456789101112131415161718192021222324252627282930313233#include &lt;iostream&gt;template &lt;typename T&gt;class AddSpace&#123;private:    const T &amp;elem;public:    AddSpace(const T &amp;elem) : elem(elem) &#123;&#125;    friend std::ostream &amp;operator&lt;&lt;(std::ostream &amp;os, const AddSpace&lt;T&gt; &amp;obj)    &#123;        return os &lt;&lt; obj.elem &lt;&lt; &#x27; &#x27;;    &#125;&#125;;template &lt;typename... Args&gt;void...</div></div></div></a><a class="pagination-related" href="/2024/11/04/template_2_1/" title="C++模板基础（一）模板基本技巧（上）"><img class="cover" src="/img/11.jpg" alt="cover"><div class="info text-center"><div class="info-1"><div class="info-item-1"><i class="far fa-calendar-alt fa-fw"></i> 2024-11-04</div><div class="info-item-2">C++模板基础（一）模板基本技巧（上）</div></div><div class="info-2"><div class="info-item-1">关键字typenameC++在标准化过程中，引入了关键字typename来说明模板内部的某个标识符是一种类型： 12345678910111213141516171819202122232425#include &lt;iostream&gt;class B&#123;public:    using Subtype = int;&#125;;template &lt;typename T&gt;class A&#123;public:    typename T::Subtype *ptr;&#125;;int main()&#123;    A&lt;B&gt; a;    a.ptr = new int(1);    std::cout &lt;&lt; *a.ptr &lt;&lt; std::endl;    delete a.ptr;    return...</div></div></div></a><a class="pagination-related" href="/2024/11/05/template_2_2/" title="C++模板基础（一）模板基本技巧（下）"><img class="cover" src="/img/12.jpg" alt="cover"><div class="info text-center"><div class="info-1"><div class="info-item-1"><i class="far fa-calendar-alt fa-fw"></i> 2024-11-05</div><div class="info-item-2">C++模板基础（一）模板基本技巧（下）</div></div><div class="info-2"><div class="info-item-1">成员模板对于嵌套类和成员函数来说，它们也有可能是模板，下面让我们用C++模板入门（二）类模板中的Stack&lt;&gt;类继续演示。 为了方便，我们截取一部分： 12345678910111213141516171819202122232425262728293031template &lt;typename T&gt;class Stack &#123;public:    Stack() = default;    ~Stack() = default;    void push(const T&amp; value) &#123;        stack.push_back(value);    &#125;    void pop() &#123;        assert(!stack.empty());        stack.pop_back();    &#125;    const T&amp; top() const &#123;        assert(!stack.empty());        return stack.back();  ...</div></div></div></a></div></div><hr class="custom-hr"/><div id="post-comment"><div class="comment-head"><div class="comment-headline"><i class="fas fa-comments fa-fw"></i><span> Comments</span></div></div><div class="comment-wrap"><div><div id="giscus-wrap"></div></div></div></div></div><div class="aside-content" id="aside-content"><div class="card-widget card-info text-center"><div class="avatar-img"><img src="/img/aili.png" onerror="this.onerror=null;this.src='/img/friend_404.gif'" alt="avatar"/></div><div class="author-info-name">Eysiking</div><div class="author-info-description">Eysiking's Persional Blog</div><div class="site-data"><a href="/archives/"><div class="headline">Articles</div><div class="length-num">44</div></a><a href="/tags/"><div class="headline">Tags</div><div class="length-num">6</div></a><a href="/categories/"><div class="headline">Categories</div><div class="length-num">3</div></a></div><a id="card-info-btn" target="_blank" rel="noopener" href="https://github.com/LineageStar"><i class="fab fa-github"></i><span>GitHub</span></a><div class="card-info-social-icons"><a class="social-icon" href="https://github.com/LineageStar" target="_blank" title="Github"><i class="fab fa-github" style="color: #24292e;"></i></a><a class="social-icon" href="https://eysikinge@gmail.com" target="_blank" title="Email"><i class="fas fa-envelope" style="color: #4a7dbe;"></i></a></div></div><div class="card-widget card-announcement"><div class="item-headline"><i class="fas fa-bullhorn fa-shake"></i><span>Announcement</span></div><div class="announcement_content">Updating...</div></div><div class="sticky_layout"><div class="card-widget" id="card-toc"><div class="item-headline"><i class="fas fa-stream"></i><span>Contents</span><span class="toc-percentage"></span></div><div class="toc-content is-expand"><ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#%E6%88%90%E5%91%98%E6%A8%A1%E6%9D%BF"><span class="toc-number">1.</span> <span class="toc-text">成员模板</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#template%E6%9E%84%E9%80%A0"><span class="toc-number">1.1.</span> <span class="toc-text">.template构造</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E6%B3%9B%E5%9E%8Blambda%E5%92%8C%E6%88%90%E5%91%98%E6%A8%A1%E6%9D%BF"><span class="toc-number">1.2.</span> <span class="toc-text">泛型lambda和成员模板</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#%E5%8F%98%E9%87%8F%E6%A8%A1%E6%9D%BF"><span class="toc-number">2.</span> <span class="toc-text">变量模板</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E6%95%B0%E6%8D%AE%E6%88%90%E5%91%98%E7%9A%84%E5%8F%98%E9%87%8F%E6%A8%A1%E6%9D%BF"><span class="toc-number">2.1.</span> <span class="toc-text">数据成员的变量模板</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E7%B1%BB%E5%9E%8B%E7%89%B9%E5%BE%81%E5%90%8E%E7%BC%80-v"><span class="toc-number">2.2.</span> <span class="toc-text">类型特征后缀_v</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#%E6%A8%A1%E6%9D%BF%E7%9A%84%E6%A8%A1%E6%9D%BF%E5%8F%82%E6%95%B0%E7%AE%80%E4%BB%8B"><span class="toc-number">3.</span> <span class="toc-text">模板的模板参数简介</span></a></li></ol></div></div><div class="card-widget card-recent-post"><div class="item-headline"><i class="fas fa-history"></i><span>Recent Posts</span></div><div class="aside-list"><div class="aside-list-item"><a class="thumbnail" href="/2025/05/25/CodeForces/Codeforces2110/" title="Codeforces Round 1026 (Div. 2)题解"><img src="/img/53.jpg" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="Codeforces Round 1026 (Div. 2)题解"/></a><div class="content"><a class="title" href="/2025/05/25/CodeForces/Codeforces2110/" title="Codeforces Round 1026 (Div. 2)题解">Codeforces Round 1026 (Div. 2)题解</a><time datetime="2025-05-26T01:11:16.220Z" title="Updated 2025-05-26 09:11:16">2025-05-26</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/2024/10/31/thread1_base/" title="C++多线程入门（一）thread类介绍"><img src="/img/3.jpg" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="C++多线程入门（一）thread类介绍"/></a><div class="content"><a class="title" href="/2024/10/31/thread1_base/" title="C++多线程入门（一）thread类介绍">C++多线程入门（一）thread类介绍</a><time datetime="2025-05-26T00:44:39.491Z" title="Updated 2025-05-26 08:44:39">2025-05-26</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/2024/10/30/%E6%A8%A1%E6%9D%BF%E5%85%A5%E9%97%A8/" title="C++模板入门（一）函数模板"><img src="/img/1.jpg" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="C++模板入门（一）函数模板"/></a><div class="content"><a class="title" href="/2024/10/30/%E6%A8%A1%E6%9D%BF%E5%85%A5%E9%97%A8/" title="C++模板入门（一）函数模板">C++模板入门（一）函数模板</a><time datetime="2025-05-26T00:44:39.491Z" title="Updated 2025-05-26 08:44:39">2025-05-26</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/2024/10/31/thread_base2_mutex/" title="C++多线程入门（一）thread类介绍"><img src="/img/3.jpg" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="C++多线程入门（一）thread类介绍"/></a><div class="content"><a class="title" href="/2024/10/31/thread_base2_mutex/" title="C++多线程入门（一）thread类介绍">C++多线程入门（一）thread类介绍</a><time datetime="2025-05-26T00:44:39.491Z" title="Updated 2025-05-26 08:44:39">2025-05-26</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/2024/11/12/template_2_6/" title="C++模板基础（五）模板实战"><img src="/img/16.jpg" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="C++模板基础（五）模板实战"/></a><div class="content"><a class="title" href="/2024/11/12/template_2_6/" title="C++模板基础（五）模板实战">C++模板基础（五）模板实战</a><time datetime="2025-05-26T00:44:39.490Z" title="Updated 2025-05-26 08:44:39">2025-05-26</time></div></div></div></div></div></div></main><footer id="footer" style="background-image: url(/img/12.jpg);"><div id="footer-wrap"><div class="copyright">&copy;2024 - 2025 By Eysiking</div><div class="framework-info"><span>Framework </span><a target="_blank" rel="noopener" href="https://hexo.io">Hexo</a><span class="footer-separator">|</span><span>Theme </span><a target="_blank" rel="noopener" href="https://github.com/jerryc127/hexo-theme-butterfly">Butterfly</a></div><div class="footer_custom_text">Hi, welcome to my <a href="https://lineagestar.github.io">blog</a>!</div></div></footer></div><div id="rightside"><div id="rightside-config-hide"><button id="readmode" type="button" title="Reading Mode"><i class="fas fa-book-open"></i></button><button id="darkmode" type="button" title="Toggle Between Light and Dark Mode"><i class="fas fa-adjust"></i></button><button id="hide-aside-btn" type="button" title="Toggle Between Single-column and Double-column"><i class="fas fa-arrows-alt-h"></i></button></div><div id="rightside-config-show"><button id="rightside-config" type="button" title="Settings"><i class="fas fa-cog fa-spin"></i></button><button class="close" id="mobile-toc-button" type="button" title="Table of Contents"><i class="fas fa-list-ul"></i></button><a id="to_comment" href="#post-comment" title="Scroll to Comments"><i class="fas fa-comments"></i></a><button id="go-up" type="button" title="Back to Top"><span class="scroll-percent"></span><i class="fas fa-arrow-up"></i></button></div></div><div><script src="/js/utils.js"></script><script src="/js/main.js"></script><script>(() => {
+  const panguFn = () => {
+    if (typeof pangu === 'object') pangu.autoSpacingPage()
+    else {
+      btf.getScript('https://cdn.jsdelivr.net/npm/pangu/dist/browser/pangu.min.js')
+        .then(() => {
+          pangu.autoSpacingPage()
+        })
+    }
+  }
+
+  const panguInit = () => {
+    if (true){
+      GLOBAL_CONFIG_SITE.isPost && panguFn()
+    } else {
+      panguFn()
+    }
+  }
+
+  btf.addGlobalFn('pjaxComplete', panguInit, 'pangu')
+  document.addEventListener('DOMContentLoaded', panguInit)
+})()</script><div class="js-pjax"><script>(() => {
+  const loadMathjax = () => {
+    if (!window.MathJax) {
+      window.MathJax = {
+        tex: {
+          inlineMath: [['$', '$'], ['\\(', '\\)']],
+          tags: 'none',
+        },
+        chtml: {
+          scale: 1.1
+        },
+        options: {
+          enableMenu: true,
+          renderActions: {
+            findScript: [10, doc => {
+              for (const node of document.querySelectorAll('script[type^="math/tex"]')) {
+                const display = !!node.type.match(/; *mode=display/)
+                const math = new doc.options.MathItem(node.textContent, doc.inputJax[0], display)
+                const text = document.createTextNode('')
+                node.parentNode.replaceChild(text, node)
+                math.start = {node: text, delim: '', n: 0}
+                math.end = {node: text, delim: '', n: 0}
+                doc.math.push(math)
+              }
+            }, '']
+          }
+        }
+      }
+      
+      const script = document.createElement('script')
+      script.src = 'https://cdn.jsdelivr.net/npm/mathjax/es5/tex-mml-chtml.min.js'
+      script.id = 'MathJax-script'
+      script.async = true
+      document.head.appendChild(script)
+    } else {
+      MathJax.startup.document.state(0)
+      MathJax.texReset()
+      MathJax.typesetPromise()
+    }
+  }
+
+  btf.addGlobalFn('encrypt', loadMathjax, 'mathjax')
+  window.pjax ? loadMathjax() : window.addEventListener('load', loadMathjax)
+})()</script><script>(()=>{
+  const getGiscusTheme = theme => theme === 'dark' ? 'NoBorder Dark' : 'NoBorder Light'
+
+  const loadGiscus = () => {
+    const config = Object.assign({
+      src: 'https://giscus.app/client.js',
+      'data-repo': 'LineageStar/Eysiking-s-personal-blog',
+      'data-repo-id': 'R_kgDONIZRMA',
+      'data-category-id': 'DIC_kwDONIZRMM4Cj37c',
+      'data-mapping': 'pathname',
+      'data-theme': getGiscusTheme(document.documentElement.getAttribute('data-theme')),
+      'data-reactions-enabled': '1',
+      crossorigin: 'anonymous',
+      async: true
+    },null)
+
+    const ele = document.createElement('script')
+    for (let key in config) {
+      ele.setAttribute(key, config[key])
+    }
+    document.getElementById('giscus-wrap').appendChild(ele)
+  }
+
+  const changeGiscusTheme = theme => {
+    const iframe = document.querySelector('#giscus-wrap iframe')
+    if (iframe) {
+      const message = {
+        giscus: {
+          setConfig: {
+            theme: getGiscusTheme(theme)
+          }
+        }
+      }
+      iframe.contentWindow.postMessage(message, 'https://giscus.app')
+    }
+  }
+
+  btf.addGlobalFn('themeChange', changeGiscusTheme, 'giscus')
+
+  if ('Giscus' === 'Giscus' || !true) {
+    if (true) btf.loadComment(document.getElementById('giscus-wrap'), loadGiscus)
+    else loadGiscus()
+  } else {
+    window.loadOtherComment= loadGiscus
+  }
+})()</script></div><script async data-pjax src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script></div></body></html>
